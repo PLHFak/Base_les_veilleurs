@@ -22,3 +22,11 @@ Langue : onglets FR / EN / NL / DE en haut de page, ou `?lang=en` dans le lien ;
 
 Accès : code `EVA` (côté client, `lv.js`), ou `?code=EVA` dans le lien. Pages en `noindex`.
 
+
+## Mesure d'audience (chapitre « Fréquentation »)
+
+- `api/hit.js` — reçoit les mesures du navigateur sur le même domaine que le site (rien vers un tiers ; échec silencieux). Pas d'IP ni de cookie : site, langue, page, document téléchargé, pays/ville (en-têtes Vercel), appareil, durée.
+- `api/stats.js` — statistiques ; le code administrateur est vérifié dans la base (fonction `lv_stats`), jamais côté client.
+- `api/_cfg.js` — URL et clé *anon* Supabase (variables Vercel `SUPABASE_URL` / `SUPABASE_ANON_KEY` prioritaires).
+- `docs/lv_analytics.sql` — à exécuter une fois dans Supabase (tables `lv_hits`, `lv_config` avec le code administrateur, fonction `lv_stats`). Commun aux trois sites.
+- Le chapitre apparaît en bas de page quand le site est ouvert avec le code administrateur (saisi au clavier ; il n'est jamais mis dans un lien). Les visites administrateur ne sont pas comptées.

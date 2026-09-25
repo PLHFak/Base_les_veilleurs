@@ -148,3 +148,8 @@ footer .apres{margin-top:10px;font-size:11px}
   #langs{margin-left:0}
 }
 @media print{#gate,#topbar #langs,nav{display:none}body{background:#fff}}
+
+/* chapitre Fréquentation (administrateur) */
+#stats .period{margin-left:12px}#stats .period button{font:12px Georgia,serif;padding:2px 8px;margin-left:4px;border:1px solid var(--line);background:#fff;color:var(--acc);cursor:pointer;border-radius:3px}#stats .period button.cur{background:var(--acc);border-color:var(--acc);color:#fff}
+#stats .spark{display:flex;align-items:flex-end;gap:2px;height:90px;border-bottom:1px solid var(--line);margin:6px 0 16px}#stats .spark div{flex:1;background:var(--acc);min-width:3px;opacity:.85}
+table.stats{font-size:13px}table.stats td.bar{width:45%}table.stats td.bar div{height:10px;background:var(--acc);opacity:.7;min-width:2px}table.stats td:last-child{text-align:right;white-space:nowrap}

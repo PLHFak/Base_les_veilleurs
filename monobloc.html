@@ -32,7 +32,8 @@ canvas{display:block;width:100%;height:100%}
 <div id="gate"><form onsubmit="return gate(event)"><p>Code d'accès</p><input id="code" type="password" autofocus><button>Entrer</button></form></div>
 <script>function gate(e){e.preventDefault();if(document.getElementById('code').value.trim().toUpperCase()==='EVA'){document.getElementById('gate').remove();sessionStorage.setItem('lv','1')}else{document.getElementById('code').value=''}return false}
 const qc=new URLSearchParams(location.search).get('code');if(qc&&qc.toUpperCase()==='EVA'){sessionStorage.setItem('lv','1');history.replaceState(null,'',location.pathname)}
-if(sessionStorage.getItem('lv')==='1')document.getElementById('gate').remove();</script>
+if(['1','2'].includes(sessionStorage.getItem('lv')))document.getElementById('gate').remove();
+try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon){let sid=sessionStorage.getItem('lv_sid')||'';if(!sid){sid=Math.random().toString(36).slice(2,12);sessionStorage.setItem('lv_sid',sid)}navigator.sendBeacon('/api/hit',new Blob([JSON.stringify({site:'base',ev:'view',lang:'fr',page:'/monobloc.html',sid})],{type:'text/plain'}))}}catch(e){}</script>
 
 <header>
   <span class="proj">Les Veilleurs — Beaufort 27</span>
