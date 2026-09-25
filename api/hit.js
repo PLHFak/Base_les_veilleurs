@@ -1,7 +1,7 @@
 // Réception des mesures d'audience (même domaine que le site : aucun appel vers un tiers depuis le navigateur).
 // Aucune adresse IP n'est stockée ; pays et ville viennent des en-têtes Vercel.
 const cfg = require("./_cfg");
-const SITES = ["base", "vitrine", "aquarium"], EVENTS = ["view", "lang", "dl", "end"];
+const SITES = ["principal", "base", "vitrine", "aquarium"], EVENTS = ["view", "lang", "dl", "end"];
 function readBody(req) {
   return new Promise(r => { let d = ""; req.on("data", c => { d += c; if (d.length > 4096) req.destroy(); }); req.on("end", () => r(d)); req.on("error", () => r("")); });
 }
