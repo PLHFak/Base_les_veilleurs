@@ -75,8 +75,14 @@ footer{padding:28px 0 40px;font-size:13px;color:var(--gris)}
 footer code{background:var(--sable);padding:1px 6px}
 @media (max-width:760px){.hero{grid-template-columns:1fr;padding:28px 0}.hero img{order:-1}}
 </style>
+<style>#gate{position:fixed;inset:0;background:var(--pierre,#f5f0e6);display:flex;align-items:center;justify-content:center;z-index:99;font-family:Georgia,serif}#gate form{text-align:center}#gate input{font-size:18px;padding:8px 12px;border:1px solid #c9bc9c;border-radius:4px}#gate button{font-size:16px;padding:8px 14px;margin-left:6px}</style>
 </head>
 <body>
+<div id="gate"><form onsubmit="return gate(event)"><p>Code d'accès</p><input id="code" type="password" autofocus><button>Entrer</button></form></div>
+<script>function gate(e){e.preventDefault();if(document.getElementById('code').value.trim().toUpperCase()==='EVA'){document.getElementById('gate').remove();sessionStorage.setItem('lv','1')}else{document.getElementById('code').value=''}return false}
+const qc=new URLSearchParams(location.search).get('code');if(qc&&qc.toUpperCase()==='EVA'){sessionStorage.setItem('lv','1');history.replaceState(null,'',location.pathname)}
+if(sessionStorage.getItem('lv')==='1')document.getElementById('gate').remove();</script>
+
 
 <header>
   <div class="wrap hero">
@@ -135,7 +141,7 @@ footer code{background:var(--sable);padding:1px 6px}
 </main>
 
 <footer class="wrap">
-  Dossier de travail EHlab / THE FAKTORY — usage interne. En ligne : <a href="https://base-les-veilleurs.vercel.app">base-les-veilleurs.vercel.app</a> · source <code>github.com/PLHFak/Base_les_veilleurs</code>, déploiement automatique Vercel. Les photos des ateliers restent la propriété de leurs auteurs et ne sont reproduites qu'à titre de référence.
+  Dossier de travail — usage interne, accès par lien. En ligne : <a href="https://base-les-veilleurs.vercel.app">base-les-veilleurs.vercel.app</a> · source <code>github.com/PLHFak/Base_les_veilleurs</code>, déploiement automatique Vercel. Les photos des ateliers restent la propriété de leurs auteurs et ne sont reproduites qu'à titre de référence.
 </footer>
 
 <script src="data.js"></script>
