@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Monobloc 3D — Les Veilleurs</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--sable:#e9dfc8;--pierre:#f5f0e6;--ink:#1f1b16;--gris:#6b6255;--ligne:#c9bc9c;--cristal:#1f5c4a}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--pierre);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;display:flex;flex-direction:column}
+header{background:var(--sable);border-bottom:1px solid var(--ligne);padding:12px 22px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+header h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:26px;margin:0;font-weight:600}
+header a{color:var(--cristal);text-decoration:none;border-bottom:1px solid var(--ligne);font-size:14px}
+header .meta{color:var(--gris);font-size:13px;margin-left:auto}
+#stage{flex:1;position:relative;min-height:0}
+canvas{display:block;width:100%;height:100%}
+#hud{position:absolute;left:14px;bottom:14px;background:rgba(245,240,230,.92);border:1px solid var(--ligne);padding:10px 12px;font-size:13px;line-height:1.5;max-width:340px}
+#hud b{font-weight:500}
+#hud .sw{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:middle;border:1px solid #0003}
+#load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;font-size:22px;font-style:italic;color:var(--gris)}
+#btns{position:absolute;right:14px;top:14px;display:flex;gap:6px;flex-wrap:wrap}
+#btns button{background:var(--sable);border:1px solid var(--ligne);padding:6px 10px;font:13px "IBM Plex Sans",sans-serif;cursor:pointer;color:var(--ink)}
+#btns button:hover{border-color:var(--cristal);color:var(--cristal)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Monobloc — maquette 3D</h1>
+  <a href="index.html">← retour au dossier</a>
+  <span class="meta">les veilleurs v01 260922 · J. Miceli · glisser pour tourner, molette pour zoomer, clic droit pour déplacer</span>
+</header>
+<div id="stage">
+  <div id="load">Chargement du modèle…</div>
+  <div id="btns">
+    <button data-v="iso">Isométrie</button><button data-v="face">Face</button><button data-v="dessus">Dessus</button><button data-v="arriere">Arrière</button>
+    <button id="tglGlass">Écran on/off</button><button id="tglFrame">Châssis on/off</button>
+  </div>
+  <div id="hud">
+    <div><span class="sw" style="background:#d9cba9"></span><b>Base</b> Comblanchien, 2 750 × 2 125 × 527 mm, ≈ 6,7 t</div>
+    <div><span class="sw" style="background:#8a8f94"></span><b>Châssis</b> 100 × 40 (v00 Jacky ; principe retenu : U 80 × 40)</div>
+    <div><span class="sw" style="background:#cfe6ef"></span><b>Écran</b> 1 800 × 1 200</div>
+    <div><span class="sw" style="background:#2f7a63"></span><b>Cristaux</b> 36 blocs 200 × 100 × 100</div>
+    <div><span class="sw" style="background:#a89a7c"></span><b>Rose des vents</b> demi-disque R860</div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+(function(){
+  const stage=document.getElementById('stage');
+  const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); stage.insertBefore(renderer.domElement,stage.firstChild);
+  const scene=new THREE.Scene(); scene.background=new THREE.Color(0xf5f0e6);
+  const cam=new THREE.PerspectiveCamera(35,1,10,50000);
+  const ctl=new THREE.OrbitControls(cam,renderer.domElement); ctl.enableDamping=true; ctl.target.set(0,-950,500);
+  scene.add(new THREE.HemisphereLight(0xffffff,0xb8a98a,.9));
+  const sun=new THREE.DirectionalLight(0xffffff,.8); sun.position.set(3000,-4000,6000); scene.add(sun);
+  const back=new THREE.DirectionalLight(0xffffff,.3); back.position.set(-3000,3000,2000); scene.add(back);
+  const grid=new THREE.GridHelper(8000,32,0xc9bc9c,0xe3d9c2); grid.rotation.x=Math.PI/2; grid.position.set(0,-950,-1); scene.add(grid);
+
+  // Le modèle est en Z vers le haut (Inventor) : on garde Z up.
+  cam.up.set(0,0,1);
+  const mats={
+    base:new THREE.MeshStandardMaterial({color:0xd9cba9,roughness:.85,metalness:0}),
+    frame:new THREE.MeshStandardMaterial({color:0x8a8f94,roughness:.35,metalness:.7}),
+    glass:new THREE.MeshPhysicalMaterial({color:0xcfe6ef,roughness:.05,metalness:0,transparent:true,opacity:.35,transmission:.4,side:THREE.DoubleSide}),
+    crystal:new THREE.MeshPhysicalMaterial({color:0x2f7a63,roughness:.15,metalness:.05,transparent:true,opacity:.85}),
+    rose:new THREE.MeshStandardMaterial({color:0xa89a7c,roughness:.7,metalness:.05,side:THREE.DoubleSide})
+  };
+  const parts={};
+  function classify(mesh){
+    const b=new THREE.Box3().setFromObject(mesh), s=new THREE.Vector3(); b.getSize(s);
+    const n=mesh.geometry.attributes.position.count;
+    if(s.x>2500) return 'base';
+    if(s.y<30&&s.z>1000) return 'glass';
+    if(s.z>1500) return 'frame';
+    if(s.x>2300&&s.z<400) return 'crystal';
+    return 'rose';
+  }
+  new THREE.GLTFLoader().load('docs/monobloc_v01.glb',g=>{
+    g.scene.traverse(o=>{ if(o.isMesh){ const k=classify(o); o.material=mats[k]; o.geometry.computeVertexNormals(); parts[k]=parts[k]||[]; parts[k].push(o);} });
+    scene.add(g.scene); document.getElementById('load').remove(); view('iso');
+  },undefined,e=>{document.getElementById('load').textContent='Modèle introuvable (docs/monobloc_v01.glb)';});
+
+  const views={iso:[3800,-5200,3000],face:[0,-7000,700],dessus:[0,-951,8000],arriere:[0,5200,2200]};
+  function view(k){ cam.position.set(...views[k]); ctl.update(); }
+  document.querySelectorAll('#btns [data-v]').forEach(b=>b.onclick=()=>view(b.dataset.v));
+  document.getElementById('tglGlass').onclick=()=>(parts.glass||[]).forEach(m=>m.visible=!m.visible);
+  document.getElementById('tglFrame').onclick=()=>(parts.frame||[]).forEach(m=>m.visible=!m.visible);
+  function resize(){ const w=stage.clientWidth,h=stage.clientHeight; renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
+  addEventListener('resize',resize); resize();
+  (function loop(){ requestAnimationFrame(loop); ctl.update(); renderer.render(scene,cam); })();
+})();
+</script>
+</body>
+</html>
