@@ -3,7 +3,7 @@
 // chaque commit sur GitHub redéploie automatiquement sur Vercel.
 
 window.DATA = {
-  version: "0.2",
+  version: "0.3",
   date: "25 septembre 2026",
 
   // ---- Objet -------------------------------------------------------------
@@ -164,6 +164,7 @@ window.DATA = {
   // ---- Journal des mises à jour ----------------------------------------------
   journal: [
     { date: "24-09-2026", texte: "Création du dossier : objet, plans V00, comparaison des trois filières, fiches sous-traitants." },
+    { date: "25-09-2026", texte: "Maquette 3D interactive du monobloc ajoutée (monobloc.html, modèle GLB dérivé de l'OBJ Inventor v01 260922)." },
     { date: "25-09-2026", texte: "Site en ligne : base-les-veilleurs.vercel.app, mise à jour automatique à chaque commit GitHub." },
     { date: "24-09-2026", texte: "Fiche TorArt complétée : site officiel torart.com, page Stories (réalisations pour artistes, dont Gormley)." }
   ]
