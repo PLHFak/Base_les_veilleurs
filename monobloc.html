@@ -24,8 +24,14 @@ canvas{display:block;width:100%;height:100%}
 #btns button{background:var(--sable);border:1px solid var(--ligne);padding:6px 10px;font:13px "IBM Plex Sans",sans-serif;cursor:pointer;color:var(--ink)}
 #btns button:hover{border-color:var(--cristal);color:var(--cristal)}
 </style>
+<style>#gate{position:fixed;inset:0;background:var(--pierre,#f5f0e6);display:flex;align-items:center;justify-content:center;z-index:99;font-family:Georgia,serif}#gate form{text-align:center}#gate input{font-size:18px;padding:8px 12px;border:1px solid #c9bc9c;border-radius:4px}#gate button{font-size:16px;padding:8px 14px;margin-left:6px}</style>
 </head>
 <body>
+<div id="gate"><form onsubmit="return gate(event)"><p>Code d'accès</p><input id="code" type="password" autofocus><button>Entrer</button></form></div>
+<script>function gate(e){e.preventDefault();if(document.getElementById('code').value.trim().toUpperCase()==='EVA'){document.getElementById('gate').remove();sessionStorage.setItem('lv','1')}else{document.getElementById('code').value=''}return false}
+const qc=new URLSearchParams(location.search).get('code');if(qc&&qc.toUpperCase()==='EVA'){sessionStorage.setItem('lv','1');history.replaceState(null,'',location.pathname)}
+if(sessionStorage.getItem('lv')==='1')document.getElementById('gate').remove();</script>
+
 <header>
   <h1>Monobloc — maquette 3D</h1>
   <a href="index.html">← retour au dossier</a>
