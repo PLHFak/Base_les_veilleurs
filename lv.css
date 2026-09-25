@@ -1,0 +1,150 @@
+/* Les Veilleurs — feuille de style commune aux trois dossiers (base, vitrine lenticulaire, aquarium K9).
+   Référence : aquarium-k9. Modifier ici, puis recopier à l'identique dans les trois dépôts. */
+:root{--bg:#f4f0e8;--ink:#2b2b2b;--acc:#5a7d8c;--acc-2:#3f5f6c;--mute:#7a7a7a;--line:#d9d2c3;--card:#fbf9f4;--th:#e8e2d4;--alerte:#9a4a1f}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:16px/1.55 Georgia,"Times New Roman",serif;color:var(--ink);background:var(--bg)}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+
+/* Barre de titre commune : projet, dossiers frères, langues */
+#topbar{background:var(--th);border-bottom:1px solid var(--line);font-size:13px}
+#topbar .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:8px 20px}
+#topbar .proj{letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+#topbar .sites{display:flex;flex-wrap:wrap;gap:4px 12px;color:var(--mute)}
+#topbar .sites a{color:var(--acc)}
+#topbar .sites a.cur{color:var(--ink);border-bottom:1px solid var(--ink);pointer-events:none}
+#langs{margin-left:auto;display:flex;gap:2px}
+#langs button{font:13px Georgia,serif;letter-spacing:.06em;padding:4px 9px;border:1px solid var(--line);background:#fff;color:var(--acc);cursor:pointer;border-radius:3px}
+#langs button.cur{background:var(--acc);border-color:var(--acc);color:#fff}
+#langs button:hover:not(.cur){border-color:var(--acc)}
+
+header{padding:36px 0 22px}
+header .wrap{padding:0 20px}
+h1{font-size:30px;margin:0 0 4px;font-weight:normal;line-height:1.15}
+.sub{color:var(--mute);font-size:14px}
+.sub b{color:var(--ink);font-weight:normal}
+
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+nav ul{list-style:none;margin:0 auto;padding:10px 20px;max-width:960px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px}
+nav a{color:var(--acc);white-space:nowrap}
+
+main{max-width:960px;margin:0 auto;padding:10px 20px 40px}
+section{padding:26px 0;border-bottom:1px solid var(--line)}
+h2{font-weight:normal;font-size:22px;color:var(--acc);margin:0 0 12px}
+h2 small{font-size:13px;color:var(--mute);margin-left:10px}
+h3{font-size:16px;margin:16px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--mute);margin:0 0 14px}
+img{max-width:100%;display:block;border:1px solid var(--line);background:#fff;margin:10px 0 4px}
+.leg{font-size:13px;color:var(--mute)}
+.note{background:var(--card);border-left:3px solid var(--acc);padding:10px 14px;margin:12px 0}
+.unique{background:var(--card);border:1px solid var(--line);padding:12px 16px;margin:14px 0;font-style:italic}
+.avis{font-size:13px;color:var(--mute);border:1px dashed var(--line);padding:6px 10px;display:inline-block;margin:6px 0}
+
+table{border-collapse:collapse;width:100%;font-size:14px;margin:10px 0;background:#fff}
+td,th{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--th);font-weight:normal}
+tr.total td{font-weight:bold;background:var(--card)}
+td.rowh{color:var(--mute);font-size:13px;white-space:nowrap}
+.scroll{overflow-x:auto}
+
+ul.pts li{margin:6px 0}
+ol.etapes{padding-left:22px}ol.etapes li{margin:8px 0}
+details{background:var(--card);border:1px solid var(--line);padding:10px 14px;margin:10px 0}
+summary{cursor:pointer;color:var(--acc)}
+pre{white-space:pre-wrap;font:13px/1.45 ui-monospace,Menlo,monospace;background:var(--card);border:1px solid var(--line);padding:12px}
+button.copy{font:13px Georgia,serif;background:#fff;border:1px solid var(--line);padding:6px 12px;cursor:pointer;color:var(--acc)}
+
+/* Fiche clé-valeur */
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:10px 0}
+.kv div{background:#fff;border:1px solid var(--line);padding:10px 12px;font-size:14px}
+.kv b{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-bottom:3px;font-weight:normal}
+
+/* Vues (contexte) */
+.vues{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:10px 0;align-items:start}
+.vue{background:#fff;border:1px solid var(--line)}
+.vue img{border:0;border-bottom:1px solid var(--line);margin:0;width:100%}
+.vue .body{padding:8px 12px 10px}
+.vue b{font-weight:normal;display:block}
+.vue p{margin:2px 0 0;font-size:13px;color:var(--mute)}
+
+/* Principe : texte + schéma côte à côte */
+.bloc{display:grid;grid-template-columns:1fr 1.15fr;gap:22px;align-items:start;margin:6px 0 18px}
+.bloc img{margin:0}
+.bloc p{margin:0 0 10px}
+.croquis{font-size:13px;color:var(--mute);margin-top:10px}
+.croquis img{max-width:380px}
+
+/* Fiches (ateliers, fournitures) */
+.groupe{font-size:18px;color:var(--acc);margin:22px 0 10px}
+.groupe span{font-size:12px;color:var(--mute);margin-left:10px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--line);display:flex;flex-direction:column}
+.card .ph{aspect-ratio:16/9;background:var(--th);position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.card .ph img{width:100%;height:100%;object-fit:cover;border:0;margin:0}
+.card .ph .none{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--mute);font-style:italic;font-size:14px;padding:16px;text-align:center}
+.card .body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h4{font-size:17px;font-weight:normal;margin:0;line-height:1.2}
+.card .lieu{font-size:13px;color:var(--mute)}.card .lieu b{font-weight:normal;color:var(--ink);margin-right:6px}
+.card p{margin:0;font-size:14px}
+.card p.why{border-left:3px solid var(--acc);padding-left:10px}
+.card .cred,.card .ref{font-size:11px;color:var(--mute)}
+.card .links{margin-top:auto;display:flex;flex-wrap:wrap;gap:12px;font-size:13px;padding-top:4px}
+.badge{display:inline-block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border:1px solid var(--line);color:var(--mute);border-radius:2px;width:max-content}
+.badge.devis,.badge.reco{border-color:var(--acc);color:var(--acc)}
+.badge.ecarte{border-color:var(--alerte);color:var(--alerte)}
+
+/* Documents : cartouche-vignette par document */
+.docgroupe{font-size:16px;margin:18px 0 8px;color:var(--ink)}
+.docs{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.doc{background:#fff;border:1px solid var(--line);display:grid;grid-template-columns:104px 1fr;gap:0}
+.doc .th{border-right:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;padding:6px}
+.doc .th a{display:block;width:100%}
+.doc .th img{width:100%;max-height:120px;object-fit:contain;border:1px solid var(--line);margin:0;background:#fff}
+.doc .th .fmt{font-size:22px;color:var(--mute);letter-spacing:.06em}
+.doc .body{padding:9px 11px 10px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.doc .t{font-size:14px;line-height:1.3}
+.doc .meta{font-size:11px;color:var(--mute);letter-spacing:.02em}
+.doc .meta b{font-weight:normal;color:var(--ink)}
+.doc .dl{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px;padding-top:4px}
+.doc .dl a{font-size:12px;border:1px solid var(--line);padding:2px 8px;border-radius:3px;background:var(--card);color:var(--acc);word-break:break-all}
+.doc .dl a::before{content:"⤓ ";color:var(--mute)}
+.doc .dl a:hover{border-color:var(--acc);text-decoration:none}
+.doc .dl a.ext::before{content:"↗ "}
+.doc .st{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc)}
+
+/* Journal */
+.journal{list-style:none;padding:0;margin:0}
+.journal li{display:grid;grid-template-columns:100px 1fr;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.journal li b{color:var(--acc);font-weight:normal}
+
+/* Cartouche technique de pied de page (même modèle que les PDF) */
+footer{max-width:960px;margin:0 auto;padding:20px 20px 40px;font-size:12px;color:var(--mute)}
+.cartouche{display:grid;grid-template-columns:1.1fr 1.3fr .9fr;border:1px solid var(--ink);background:#fff;color:var(--ink)}
+.cartouche>div{padding:8px 10px;border-right:1px solid var(--ink);min-width:0}
+.cartouche>div:last-child{border-right:0}
+.cartouche .k{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-top:6px}
+.cartouche .k:first-child{margin-top:0}
+.cartouche .v{font-size:12px;line-height:1.35}
+.cartouche .v b{font-weight:bold}
+.cartouche .statut{display:inline-block;border:1px solid var(--acc);color:var(--acc);padding:2px 8px;letter-spacing:.1em;font-size:12px;margin-top:2px}
+.cartouche .legal{font-size:10px;line-height:1.35;color:var(--mute);margin-top:8px}
+.cartouche .src{font-size:10px;color:var(--mute);margin-top:6px}
+.cartouche .src code{background:var(--th);padding:0 4px}
+footer .apres{margin-top:10px;font-size:11px}
+
+/* Grille d'accès */
+#gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:10}
+#gate form{text-align:center}
+#gate input{font-size:18px;padding:8px 12px;border:1px solid var(--line);border-radius:4px}
+#gate button{font-size:16px;padding:8px 14px;margin-left:6px;font-family:inherit}
+
+@media (max-width:720px){
+  .bloc{grid-template-columns:1fr}
+  .cartouche{grid-template-columns:1fr}
+  .cartouche>div{border-right:0;border-bottom:1px solid var(--ink)}
+  .cartouche>div:last-child{border-bottom:0}
+  #langs{margin-left:0}
+}
+@media print{#gate,#topbar #langs,nav{display:none}body{background:#fff}}

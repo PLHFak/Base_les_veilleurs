@@ -1,171 +1,203 @@
-// Données du dossier « Base monobloc — Les Veilleurs ».
-// Ce fichier est le seul à modifier pour mettre le site à jour :
-// chaque commit sur GitHub redéploie automatiquement sur Vercel.
+// Base monobloc — données du site.
+// Seul ce fichier porte le contenu ; index.html, lv.css et lv.js sont communs aux trois dossiers.
+// Chaque texte est donné dans les quatre langues : L("fr", "en", "nl", "de"). Les plans restent légendés en français.
+const L = (fr, en, nl, de) => ({fr, en, nl, de});
 
 window.DATA = {
-  version: "0.3",
-  date: "25 septembre 2026",
+  version: "0.4",
+  date: "25-09-2026",
+  titre: L("La base monobloc", "The monolithic base", "De monolithische sokkel", "Der monolithische Sockel"),
+  sous_titre: L("Les Veilleurs · Eva L'Hoest · Beaufort 27 — étude de fabrication : trois filières, les ateliers qui savent les faire",
+                "Les Veilleurs · Eva L'Hoest · Beaufort 27 — fabrication study: three routes, the workshops able to make it",
+                "Les Veilleurs · Eva L'Hoest · Beaufort 27 — fabricagestudie: drie kanalen, de ateliers die het kunnen maken",
+                "Les Veilleurs · Eva L'Hoest · Beaufort 27 — Fertigungsstudie: drei Wege, die Werkstätten, die es können"),
+  cartouche: {
+    num: "LV-BA-WEB-01", statut: "ÉTUDE", genere: "25-09-2026 04:16",
+    objet: L("Socle monobloc en D, 2 750 × 2 125 × 527 mm — pierre usinée, pierre tendre ou béton architectonique",
+             "Monolithic D-shaped base, 2,750 × 2,125 × 527 mm — machined stone, soft stone or architectural concrete",
+             "Monolithische D-vormige sokkel, 2 750 × 2 125 × 527 mm — gefreesde steen, zachte steen of architectonisch beton",
+             "Monolithischer D-förmiger Sockel, 2 750 × 2 125 × 527 mm — gefräster Stein, Weichgestein oder Architekturbeton"),
+    url: "https://base-les-veilleurs.vercel.app", repo: "github.com/PLHFak/Base_les_veilleurs"
+  },
+  nav: [
+    {id:"objet", label:L("L'objet","The object","Het object","Das Objekt")},
+    {id:"monobloc.html", label:L("Maquette 3D ↗","3D model ↗","3D-model ↗","3D-Modell ↗"), href:"monobloc.html"},
+    {id:"filieres", label:L("Trois filières","Three routes","Drie kanalen","Drei Wege")},
+    {id:"ateliers", label:L("Ateliers & fournisseurs","Workshops & suppliers","Ateliers & leveranciers","Werkstätten & Lieferanten")},
+    {id:"etapes", label:L("Prochaines étapes","Next steps","Volgende stappen","Nächste Schritte")},
+    {id:"documents", label:L("Documents","Documents","Documenten","Dokumente")},
+    {id:"journal", label:L("Journal","Log","Logboek","Protokoll")}
+  ],
 
-  // ---- Objet -------------------------------------------------------------
   objet: {
-    dims: "2 750 × 2 125 × 527 mm",
-    volumeFini: "≈ 2,65 m³",
-    blocBrut: "≈ 2,9 × 2,3 × 0,6 m ≈ 4 m³ (≈ 10 t en Comblanchien, ~35 % de chute)",
-    poidsBase: "6 720 kg (Comblanchien)",
-    poidsEnsemble: "≈ 7 300 kg",
-    niche: "2 230 × 300 mm, profondeur 450 mm (caisson des 36 blocs cristal 200×100×100)",
-    poche: "demi-disque R860 (rose des vents / fond gravé)",
-    montants: "2 réservations 50 × 110 mm pour le châssis de l'écran (1 800 × 1 200)",
-    plans: [
-      { titre: "Base mono bloc V00 — plan coté (J. Miceli, 22-09-26)", fichier: "docs/base_mono_bloc_V00.pdf" },
-      { titre: "Ensemble base + écran + cristaux (v01 260922)", fichier: "docs/base_cplt_260922.pdf" },
-      { titre: "Variante écran courbe (essai 1)", fichier: "docs/base_cplt_courbe_260922.pdf" }
+    titre: L("L'objet","The object","Het object","Das Objekt"),
+    sous: L("plans J. Miceli, V00 du 22-09-26","drawings J. Miceli, V00 of 22-09-26","plannen J. Miceli, V00 van 22-09-26","Pläne J. Miceli, V00 vom 22-09-26"),
+    lead: L("Un socle en D, d'une seule pièce, qui reçoit le châssis de l'écran lenticulaire, la niche des cristaux et la rose des vents. La géométrie est du 2,5D : contour, poches, une rampe — pas de sculpture en contre-dépouille.",
+            "A D-shaped base in a single piece, receiving the lenticular screen frame, the crystal niche and the compass rose. The geometry is 2.5D: outline, pockets, one ramp — no undercut sculpture.",
+            "Een D-vormige sokkel uit één stuk, die het kader van het lenticulaire scherm, de nis van de kristallen en de windroos opneemt. De geometrie is 2,5D: omtrek, uitsparingen, één helling — geen sculptuur met ondersnijding.",
+            "Ein D-förmiger Sockel aus einem Stück, der den Rahmen des Lentikularschirms, die Kristallnische und die Windrose aufnimmt. Die Geometrie ist 2,5D: Kontur, Taschen, eine Rampe — keine hinterschnittene Skulptur."),
+    rendu: "img/rendu_260924.jpeg",
+    rendu_leg: L("Rendu de la base avec châssis d'écran et niche des cristaux — maquette 3D J. Miceli, 24-09-26","Rendering of the base with screen frame and crystal niche — 3D model J. Miceli, 24-09-26","Rendering van de sokkel met schermkader en kristallennis — 3D-model J. Miceli, 24-09-26","Darstellung des Sockels mit Schirmrahmen und Kristallnische — 3D-Modell J. Miceli, 24-09-26"),
+    kv: [
+      [L("Enveloppe","Envelope","Omhullende","Hüllmaß"), "2 750 × 2 125 × 527 mm"],
+      [L("Volume fini","Finished volume","Afgewerkt volume","Fertigvolumen"), "≈ 2,65 m³"],
+      [L("Bloc brut nécessaire","Raw block required","Benodigd ruw blok","Benötigter Rohblock"), L("≈ 2,9 × 2,3 × 0,6 m ≈ 4 m³ (≈ 10 t en Comblanchien, ~35 % de chute)","≈ 2.9 × 2.3 × 0.6 m ≈ 4 m³ (≈ 10 t in Comblanchien, ~35 % waste)","≈ 2,9 × 2,3 × 0,6 m ≈ 4 m³ (≈ 10 t in Comblanchien, ~35 % afval)","≈ 2,9 × 2,3 × 0,6 m ≈ 4 m³ (≈ 10 t in Comblanchien, ~35 % Verschnitt)")],
+      [L("Poids base / ensemble","Weight base / assembly","Gewicht sokkel / geheel","Gewicht Sockel / Gesamt"), L("6 720 kg (Comblanchien) · ≈ 7 300 kg","6,720 kg (Comblanchien) · ≈ 7,300 kg","6 720 kg (Comblanchien) · ≈ 7 300 kg","6 720 kg (Comblanchien) · ≈ 7 300 kg")],
+      [L("Niche des cristaux","Crystal niche","Kristallennis","Kristallnische"), L("2 230 × 300 mm, profondeur 450 mm (caisson des 36 blocs cristal 200×100×100) — à caler sur le dossier aquarium : 33 blocs, caisson 2 324 × 453","2,230 × 300 mm, 450 mm deep (housing for 36 crystal blocks 200×100×100) — to be aligned with the aquarium file: 33 blocks, housing 2,324 × 453","2 230 × 300 mm, diepte 450 mm (kast voor 36 kristalblokken 200×100×100) — af te stemmen op het aquariumdossier: 33 blokken, kast 2 324 × 453","2 230 × 300 mm, Tiefe 450 mm (Kasten für 36 Kristallblöcke 200×100×100) — mit dem Aquarium-Dossier abzustimmen: 33 Blöcke, Kasten 2 324 × 453")],
+      [L("Poche","Pocket","Uitsparing","Tasche"), L("demi-disque R860 (rose des vents / fond gravé)","half-disc R860 (compass rose / engraved bottom)","halve schijf R860 (windroos / gegraveerde bodem)","Halbscheibe R860 (Windrose / gravierter Grund)")],
+      [L("Montants d'écran","Screen uprights","Schermstijlen","Schirmpfosten"), L("2 réservations 50 × 110 mm pour le châssis de l'écran (1 800 × 1 200) — châssis v01 : profondeur 500, entraxe 1 780","2 recesses 50 × 110 mm for the screen frame (1,800 × 1,200) — frame v01: depth 500, centres 1,780","2 uitsparingen 50 × 110 mm voor het schermkader (1 800 × 1 200) — kader v01: diepte 500, hartafstand 1 780","2 Aussparungen 50 × 110 mm für den Schirmrahmen (1 800 × 1 200) — Rahmen v01: Tiefe 500, Achsabstand 1 780")]
     ],
-    rendu: "img/rendu_260924.jpeg"
+    maquette: L("Ouvrir la maquette 3D interactive du monobloc","Open the interactive 3D model of the monolith","Open het interactieve 3D-model van het monoliet","Das interaktive 3D-Modell des Monolithen öffnen"),
+    maquette_leg: L("base, châssis, écran, cristaux et rose des vents (modèle Inventor v01 260922)","base, frame, screen, crystals and compass rose (Inventor model v01 260922)","sokkel, kader, scherm, kristallen en windroos (Inventor-model v01 260922)","Sockel, Rahmen, Schirm, Kristalle und Windrose (Inventor-Modell v01 260922)")
   },
 
-  // ---- Filières comparées -------------------------------------------------
-  // Estimations HTVA hors pose, à remplacer par les devis reçus.
-  filieres: [
-    {
-      id: "A", nom: "Comblanchien monobloc",
-      matiere: "12–18 k€ (4 m³)", faconnage: "15–30 k€", transport: "1,5–3 k€ (10 t)",
-      total: "35–50 k€", poids: "≈ 6,7 t", grue: "lourd",
-      mer: "excellente (porosité 0,5–6 %)", ancrage: "tenue forte, usinage précis",
-      couleur: "non, sauf finition sablée", rendu: "pierre vraie, veinée",
-      reparation: "bonne", bloquant: "bloc de 2,3 m d'un seul banc", delai: "8–12 semaines",
-      variante2blocs: "−20 à −30 %",
-      devis: [{ qui: "à compléter", montant: "" }, { qui: "à compléter", montant: "" }]
+  filieres: {
+    titre: L("Trois filières","Three routes","Drie kanalen","Drei Wege"),
+    sous: L("estimations HTVA, hors pose","estimates excl. VAT, excl. installation","ramingen excl. btw, excl. plaatsing","Schätzungen ohne MwSt., ohne Montage"),
+    lead: L("Les fourchettes sont des ordres de grandeur à remplacer par les devis. Les lignes « Devis » se remplissent au fur et à mesure.",
+            "The ranges are orders of magnitude to be replaced by quotes. The “Quote” rows are filled in as they come.",
+            "De vorken zijn grootteordes die door de offertes worden vervangen. De rijen “Offerte” worden gaandeweg ingevuld.",
+            "Die Spannen sind Größenordnungen, die durch Angebote ersetzt werden. Die Zeilen „Angebot“ werden nach und nach gefüllt."),
+    colonnes: [
+      {id:"A", nom:L("Comblanchien monobloc","Comblanchien monolith","Comblanchien monoliet","Comblanchien-Monolith")},
+      {id:"B", nom:L("Pierre sable (Massangis / Euville)","Sand-coloured stone (Massangis / Euville)","Zandkleurige steen (Massangis / Euville)","Sandfarbener Stein (Massangis / Euville)")},
+      {id:"C", nom:L("Moule + béton architectonique","Mould + architectural concrete","Mal + architectonisch beton","Form + Architekturbeton")}
+    ],
+    lignes: [
+      {k:L("Matière (bloc / béton)","Material (block / concrete)","Materiaal (blok / beton)","Material (Block / Beton)"), v:[L("12–18 k€ (4 m³)","12–18 k€ (4 m³)","12–18 k€ (4 m³)","12–18 k€ (4 m³)"), "8–12 k€", L("3–6 k€ (UHPC ou GRC)","3–6 k€ (UHPC or GRC)","3–6 k€ (UHPC of GRC)","3–6 k€ (UHPC oder GRC)")]},
+      {k:L("Façonnage (usinage / moule + coulée)","Shaping (machining / mould + casting)","Bewerking (frezen / mal + gieten)","Formgebung (Fräsen / Form + Guss)"), v:["15–30 k€", "8–15 k€", L("20–35 k€ (moule 40–50 %)","20–35 k€ (mould 40–50 %)","20–35 k€ (mal 40–50 %)","20–35 k€ (Form 40–50 %)")]},
+      {k:L("Transport carrière → atelier","Transport quarry → workshop","Transport groeve → atelier","Transport Steinbruch → Werkstatt"), v:["1,5–3 k€ (10 t)", "1,5–3 k€", "—"]},
+      {k:L("TOTAL estimé","Estimated TOTAL","Geraamd TOTAAL","Geschätzte SUMME"), total:true, v:["35–50 k€", "25–35 k€", "25–45 k€"]},
+      {k:L("Devis 1","Quote 1","Offerte 1","Angebot 1"), v:[L("à compléter","to be completed","aan te vullen","zu ergänzen"), L("à compléter","to be completed","aan te vullen","zu ergänzen"), L("40 kCHF, pierre reconstituée — Kunstgiesserei St. Gallen (sept. 2026)","40 kCHF, reconstituted stone — Kunstgiesserei St. Gallen (Sept. 2026)","40 kCHF, kunststeen — Kunstgiesserei St. Gallen (sept. 2026)","40 kCHF, Kunststein — Kunstgiesserei St. Gallen (Sept. 2026)")]},
+      {k:L("Devis 2","Quote 2","Offerte 2","Angebot 2"), v:[L("à compléter","to be completed","aan te vullen","zu ergänzen"), L("à compléter","to be completed","aan te vullen","zu ergänzen"), L("à compléter","to be completed","aan te vullen","zu ergänzen")]},
+      {k:L("Poids fini","Finished weight","Afgewerkt gewicht","Fertiggewicht"), v:["≈ 6,7 t", "≈ 5,5–6,2 t", "1,5–2,5 t"]},
+      {k:L("Grue / fondations","Crane / foundations","Kraan / funderingen","Kran / Fundamente"), v:[L("lourd","heavy","zwaar","schwer"), L("lourd","heavy","zwaar","schwer"), L("léger","light","licht","leicht")]},
+      {k:L("Tenue bord de mer (sel, gel, algues)","Seafront durability (salt, frost, algae)","Duurzaamheid aan zee (zout, vorst, algen)","Beständigkeit am Meer (Salz, Frost, Algen)"), v:[L("excellente (porosité 0,5–6 %)","excellent (porosity 0.5–6 %)","uitstekend (porositeit 0,5–6 %)","ausgezeichnet (Porosität 0,5–6 %)"), L("moyenne à bonne (porosité 6–21 %)","fair to good (porosity 6–21 %)","matig tot goed (porositeit 6–21 %)","mittel bis gut (Porosität 6–21 %)"), L("très bonne en UHPC ; efflorescences possibles","very good in UHPC; efflorescence possible","zeer goed in UHPC; uitbloei mogelijk","sehr gut in UHPC; Ausblühungen möglich")]},
+      {k:L("Ancrage caisson 316L et châssis","Anchoring of 316L housing and frame","Verankering kast 316L en kader","Verankerung Kasten 316L und Rahmen"), v:[L("tenue forte, usinage précis","strong hold, precise machining","sterke houvast, nauwkeurig frezen","fester Halt, präzises Fräsen"), L("arêtes fragiles, chevilles à surdimensionner","fragile edges, oversized anchors needed","breekbare randen, pluggen te overdimensioneren","empfindliche Kanten, Dübel überdimensionieren"), L("noyés dans la masse (principe déjà retenu)","cast into the mass (principle already adopted)","ingestort in de massa (principe al weerhouden)","in der Masse eingegossen (Prinzip bereits gewählt)")]},
+      {k:L("Couleur sable","Sand colour","Zandkleur","Sandfarbe"), v:[L("non, sauf finition sablée","no, except sandblasted finish","nee, behalve gezandstraalde afwerking","nein, außer sandgestrahlte Oberfläche"), L("oui, naturelle","yes, natural","ja, natuurlijk","ja, natürlich"), L("oui, à la demande","yes, on request","ja, op aanvraag","ja, auf Wunsch")]},
+      {k:L("Rendu artistique","Artistic finish","Artistieke uitstraling","Künstlerische Wirkung"), v:[L("pierre vraie, veinée","real stone, veined","echte steen, geaderd","echter Stein, geädert"), L("pierre vraie, chaleureuse","real stone, warm","echte steen, warm","echter Stein, warm"), L("« béton », à valider sur échantillon","“concrete”, to be validated on a sample","“beton”, te valideren op staal","„Beton“, am Muster zu prüfen")]},
+      {k:L("Réparabilité sur site","On-site repairability","Herstelbaarheid ter plaatse","Reparierbarkeit vor Ort"), v:[L("bonne","good","goed","gut"), L("bonne","good","goed","gut"), L("moyenne","fair","matig","mittel")]},
+      {k:L("Point bloquant","Blocking point","Knelpunt","Knackpunkt"), v:[L("bloc de 2,3 m d'un seul banc","2.3 m block from a single bed","blok van 2,3 m uit één bank","2,3-m-Block aus einer Bank"), L("durabilité côtière à garantir","coastal durability to be guaranteed","kustbestendigheid te garanderen","Küstenbeständigkeit zu garantieren"), L("acceptation par Eva","acceptance by Eva","aanvaarding door Eva","Zustimmung von Eva")]},
+      {k:L("Délai indicatif","Indicative lead time","Indicatieve termijn","Richtwert Lieferzeit"), v:[L("8–12 semaines","8–12 weeks","8–12 weken","8–12 Wochen"), L("6–10 semaines","6–10 weeks","6–10 weken","6–10 Wochen"), L("10–14 semaines (moule)","10–14 weeks (mould)","10–14 weken (mal)","10–14 Wochen (Form)")]},
+      {k:L("Variante 2 blocs","2-block variant","Variant 2 blokken","Variante 2 Blöcke"), v:["−20 à −30 %", "−20 à −30 %", L("sans objet","not applicable","niet van toepassing","entfällt")]}
+    ],
+    lecture_t: L("Lecture rapide.","Quick read.","Snelle lezing.","Kurz gelesen."),
+    lecture: L("B est la moins chère mais porte le risque de durabilité en bord de mer ; C règle le poids et l'ancrage mais dépend d'un accord artistique ; A est la valeur sûre, la plus lourde et la plus chère. Le choix d'Eva tranche entre A/B et C avant que les chiffres ne le fassent.",
+               "B is the cheapest but carries the seafront durability risk; C solves weight and anchoring but depends on artistic approval; A is the safe bet, the heaviest and the most expensive. Eva's choice settles A/B versus C before the figures do.",
+               "B is het goedkoopst maar draagt het duurzaamheidsrisico aan zee; C lost gewicht en verankering op maar hangt af van een artistiek akkoord; A is de veilige keuze, de zwaarste en de duurste. Eva's keuze beslist tussen A/B en C vóór de cijfers dat doen.",
+               "B ist am günstigsten, trägt aber das Beständigkeitsrisiko am Meer; C löst Gewicht und Verankerung, hängt aber von der künstlerischen Zustimmung ab; A ist die sichere, schwerste und teuerste Wahl. Evas Entscheidung fällt zwischen A/B und C, bevor die Zahlen es tun.")
+  },
+
+  ateliers: {
+    titre: L("Ateliers & fournisseurs","Workshops & suppliers","Ateliers & leveranciers","Werkstätten & Lieferanten"),
+    sous: L("Europe — sélection en cours","Europe — selection in progress","Europa — selectie lopende","Europa — Auswahl läuft"),
+    lead: L("Chaque fiche renvoie au site de l'atelier et à ses réalisations les plus proches de notre pièce. Les visuels manquants seront ajoutés au fil des contacts.",
+            "Each card links to the workshop's website and to its works closest to our piece. Missing visuals will be added as contacts progress.",
+            "Elke fiche verwijst naar de website van het atelier en naar zijn realisaties die het dichtst bij ons stuk staan. Ontbrekende beelden worden toegevoegd naarmate de contacten vorderen.",
+            "Jede Karte verweist auf die Website der Werkstatt und auf ihre unserem Stück nächsten Arbeiten. Fehlende Bilder werden mit den Kontakten ergänzt."),
+    liens: {site:L("Site","Website","Website","Website"), realisations:L("Réalisations","Works","Realisaties","Referenzen")},
+    visuel: L("Visuel à ajouter","Visual to be added","Beeld toe te voegen","Bild folgt"),
+    indispo: L("Visuel indisponible","Visual unavailable","Beeld niet beschikbaar","Bild nicht verfügbar"),
+    groupes: {
+      bloc:[L("Blocs de pierre","Stone blocks","Steenblokken","Steinblöcke"), L("carrières et négociants","quarries and dealers","groeven en handelaars","Steinbrüche und Händler")],
+      usinage:[L("Usinage & sculpture numérique","Machining & digital sculpture","Frezen & digitale sculptuur","Fräsen & digitale Bildhauerei"), L("5 axes, 6 axes, robots 7 axes","5-axis, 6-axis, 7-axis robots","5 assen, 6 assen, 7-assige robots","5-Achs, 6-Achs, 7-Achs-Roboter")],
+      beton:[L("Béton architectonique","Architectural concrete","Architectonisch beton","Architekturbeton"), L("moule + coulée","mould + casting","mal + gieten","Form + Guss")],
+      pilotage:[L("Pilotage du lot","Lot management","Aansturing van het lot","Steuerung des Loses"), L("atelier référent de l'artiste","the artist's reference workshop","referentieatelier van de kunstenaar","Referenzwerkstatt der Künstlerin")]
     },
-    {
-      id: "B", nom: "Pierre sable (Massangis / Euville)",
-      matiere: "8–12 k€", faconnage: "8–15 k€", transport: "1,5–3 k€",
-      total: "25–35 k€", poids: "≈ 5,5–6,2 t", grue: "lourd",
-      mer: "moyenne à bonne (porosité 6–21 %)", ancrage: "arêtes fragiles, chevilles à surdimensionner",
-      couleur: "oui, naturelle", rendu: "pierre vraie, chaleureuse",
-      reparation: "bonne", bloquant: "durabilité côtière à garantir", delai: "6–10 semaines",
-      variante2blocs: "−20 à −30 %",
-      devis: [{ qui: "à compléter", montant: "" }, { qui: "à compléter", montant: "" }]
+    statuts: {
+      "à contacter":L("à contacter","to contact","te contacteren","zu kontaktieren"),
+      "contacté":L("contacté","contacted","gecontacteerd","kontaktiert"),
+      "devis reçu":L("devis reçu","quote received","offerte ontvangen","Angebot erhalten"),
+      "écarté":L("écarté","ruled out","afgevoerd","ausgeschieden")
     },
-    {
-      id: "C", nom: "Moule + béton architectonique",
-      matiere: "3–6 k€ (UHPC ou GRC)", faconnage: "20–35 k€ (moule 40–50 %)", transport: "—",
-      total: "25–45 k€", poids: "1,5–2,5 t", grue: "léger",
-      mer: "très bonne en UHPC ; efflorescences possibles", ancrage: "noyés dans la masse (principe déjà retenu)",
-      couleur: "oui, à la demande", rendu: "« béton », à valider sur échantillon",
-      reparation: "moyenne", bloquant: "acceptation par Eva", delai: "10–14 semaines (moule)",
-      variante2blocs: "sans objet",
-      devis: [{ qui: "Kunstgiesserei St. Gallen (sept. 2026)", montant: "40 kCHF, pierre reconstituée" }, { qui: "à compléter", montant: "" }]
-    }
+    items: [
+      {groupe:"usinage", nom:"Monument Vandekerckhove", pays:"BE", lieu:L("Ingelmunster (W-Vl.), ~40 km de Westende","Ingelmunster (W-Fl.), ~40 km from Westende","Ingelmunster (W-Vl.), ~40 km van Westende","Ingelmunster (W-Fl.), ~40 km von Westende"),
+       site:"https://www.monument-vandekerckhove.be/fr/pierre-naturelle/atelier-de-travail-de-la-pierre-naturelle", realisations:"https://www.monument-vandekerckhove.be/fr/pierre-naturelle",
+       moyens:L("Parc de scies numériques, robots 5 et 6 axes, monowire ; pièces uniques finies à la main ; restauration de monuments (cathédrales, façades) et art.","Fleet of CNC saws, 5- and 6-axis robots, monowire; one-off pieces hand-finished; restoration of monuments (cathedrals, façades) and art.","Park van CNC-zagen, 5- en 6-assige robots, monowire; unieke stukken met de hand afgewerkt; restauratie van monumenten (kathedralen, gevels) en kunst.","CNC-Sägen, 5- und 6-Achs-Roboter, Monowire; handgefertigte Einzelstücke; Denkmalrestaurierung (Kathedralen, Fassaden) und Kunst."),
+       pourquoi:L("Le plus proche du site : évite un long transport de la pièce finie (7 t). Capacité 5/6 axes suffisante pour un usinage 2,5D.","Closest to the site: avoids a long transport of the finished piece (7 t). 5/6-axis capacity sufficient for 2.5D machining.","Het dichtst bij de site: vermijdt een lang transport van het afgewerkte stuk (7 t). 5/6-assige capaciteit volstaat voor 2,5D-frezen.","Am nächsten zum Standort: erspart einen langen Transport des fertigen Stücks (7 t). 5/6-Achs-Kapazität reicht für 2,5D-Fräsen."),
+       statut:"à contacter", photo:"", photoLegende:L("Visuel à ajouter — voir la page « Atelier de travail de la pierre naturelle ».","Visual to be added — see the “natural stone workshop” page.","Beeld toe te voegen — zie de pagina “natuursteenatelier”.","Bild folgt — siehe Seite „Natursteinwerkstatt“.")},
+      {groupe:"bloc", nom:"Carrières de Maffle (Marbrerie de Soignies)", pays:"BE", lieu:L("Maffle (Ath) — showroom et atelier ; siège Soignies","Maffle (Ath) — showroom and workshop; head office Soignies","Maffle (Ath) — showroom en atelier; zetel Soignies","Maffle (Ath) — Ausstellung und Werkstatt; Sitz Soignies"),
+       site:"https://carrieresmaffle.be/", realisations:"https://carrieresmaffle.be/blocs-de-stock-en-pierres-de-france/", contact:"info@carrieresmaffle.be · +32 68 28 20 49",
+       moyens:L("Blocs de stock en Massangis, Euville, Savonnières, Semond et Comblanchien ; débit 6 faces sciées pour confrères ; pierre bleue.","Stock blocks in Massangis, Euville, Savonnières, Semond and Comblanchien; 6-face sawn cutting for the trade; Belgian bluestone.","Voorraadblokken in Massangis, Euville, Savonnières, Semond en Comblanchien; 6 zijden gezaagd voor vakgenoten; blauwe steen.","Lagerblöcke in Massangis, Euville, Savonnières, Semond und Comblanchien; 6-seitig gesägt für Fachkollegen; Blaustein."),
+       pourquoi:L("Fournisseur belge des pierres de Bourgogne : permet un devis parallèle Comblanchien / Massangis / Euville sans passer par la France.","Belgian supplier of Burgundy stones: allows a parallel Comblanchien / Massangis / Euville quote without going through France.","Belgische leverancier van Bourgondische steen: laat een parallelle offerte Comblanchien / Massangis / Euville toe zonder via Frankrijk te gaan.","Belgischer Lieferant burgundischer Steine: erlaubt ein paralleles Angebot Comblanchien / Massangis / Euville ohne Umweg über Frankreich."),
+       statut:"à contacter", photo:"https://carrieresmaffle.be/wp-content/uploads/2022/10/rocamat-massangis-3.jpg", photoCredit:"© Carrières de Maffle — Rocamat",
+       photoLegende:L("Blocs bruts de Massangis réceptionnés en carrière : l'échelle des blocs disponibles est le premier point à vérifier.","Raw Massangis blocks received at the quarry: the scale of available blocks is the first point to check.","Ruwe Massangis-blokken ontvangen in de groeve: de schaal van de beschikbare blokken is het eerste te controleren punt.","Rohblöcke aus Massangis im Steinbruch: Die Größe der verfügbaren Blöcke ist der erste zu prüfende Punkt.")},
+      {groupe:"bloc", nom:"Le Comptoir des Pierres", pays:"FR", lieu:L("Comblanchien (Côte-d'Or)","Comblanchien (Côte-d'Or)","Comblanchien (Côte-d'Or)","Comblanchien (Côte-d'Or)"),
+       site:"https://www.lecomptoirdespierres.com/", realisations:"https://www.lecomptoirdespierres.com/fr/batiment/522-bloc-pierre-6-faces-sciees.html",
+       moyens:L("Blocs 6 faces sciées sur dimensions (Lanvignes, Semond, Massangis, Comblanchien, Corton…) ; tranches jusqu'à ~230 × 140 cm ; finitions adouci, brossé, flammé.","6-face sawn blocks to size (Lanvignes, Semond, Massangis, Comblanchien, Corton…); slabs up to ~230 × 140 cm; honed, brushed, flamed finishes.","Blokken 6 zijden gezaagd op maat (Lanvignes, Semond, Massangis, Comblanchien, Corton…); platen tot ~230 × 140 cm; afwerkingen gezoet, geborsteld, gevlamd.","6-seitig gesägte Blöcke nach Maß (Lanvignes, Semond, Massangis, Comblanchien, Corton…); Platten bis ~230 × 140 cm; geschliffen, gebürstet, geflammt."),
+       pourquoi:L("Référence de prix publique : 2 900 € HT/m³ pour Lanvignes et Semond en 6 faces sciées. Atelier au pied de la carrière de Comblanchien.","Public price reference: €2,900 excl. VAT/m³ for Lanvignes and Semond, 6 faces sawn. Workshop at the foot of the Comblanchien quarry.","Publieke prijsreferentie: 2 900 € excl. btw/m³ voor Lanvignes en Semond, 6 zijden gezaagd. Atelier aan de voet van de groeve van Comblanchien.","Öffentliche Preisreferenz: 2 900 € netto/m³ für Lanvignes und Semond, 6-seitig gesägt. Werkstatt direkt am Steinbruch von Comblanchien."),
+       statut:"à contacter", photo:""},
+      {groupe:"bloc", nom:"Les Carrières de Corton / carrières de la Côte", pays:"FR", lieu:L("Nuits-Saint-Georges (Côte-d'Or)","Nuits-Saint-Georges (Côte-d'Or)","Nuits-Saint-Georges (Côte-d'Or)","Nuits-Saint-Georges (Côte-d'Or)"),
+       site:"https://www.lescarrieresdecorton.fr/pierres-de-bourgogne/", realisations:"https://www.lescarrieresdecorton.fr/",
+       moyens:L("Extraction Comblanchien, Corton, Chassagne ; pierres dures de la Côte (porosité 0,5–6 %).","Extraction of Comblanchien, Corton, Chassagne; hard stones of the Côte (porosity 0.5–6 %).","Winning van Comblanchien, Corton, Chassagne; harde stenen van de Côte (porositeit 0,5–6 %).","Abbau von Comblanchien, Corton, Chassagne; harte Steine der Côte (Porosität 0,5–6 %)."),
+       pourquoi:L("Source directe du Comblanchien prescrit sur le plan V00 ; à interroger sur la faisabilité d'un bloc 2,9 × 2,3 × 0,6 m d'un seul banc.","Direct source of the Comblanchien specified on drawing V00; to be asked about the feasibility of a 2.9 × 2.3 × 0.6 m block from a single bed.","Rechtstreekse bron van het Comblanchien voorgeschreven op plan V00; te bevragen over de haalbaarheid van een blok 2,9 × 2,3 × 0,6 m uit één bank.","Direkte Quelle des auf Plan V00 vorgeschriebenen Comblanchien; zu befragen zur Machbarkeit eines Blocks 2,9 × 2,3 × 0,6 m aus einer Bank."),
+       statut:"à contacter", photo:""},
+      {groupe:"usinage", nom:"SNBR", pays:"FR", lieu:L("Troyes (Aube)","Troyes (Aube)","Troyes (Aube)","Troyes (Aube)"),
+       site:"https://www.snbr.fr/", realisations:"https://www.snbr.fr/",
+       moyens:L("Taille de pierre et sculpture avec robots d'usinage ; restauration de monuments historiques (cathédrale de Troyes, etc.).","Stone cutting and sculpture with machining robots; restoration of historic monuments (Troyes cathedral, etc.).","Steenhouwen en beeldhouwen met freesrobots; restauratie van historische monumenten (kathedraal van Troyes, enz.).","Steinmetz- und Bildhauerarbeiten mit Fräsrobotern; Restaurierung historischer Denkmäler (Kathedrale von Troyes usw.)."),
+       pourquoi:L("Second devis usinage français, habitué aux pièces monumentales ; à confronter à Vandekerckhove.","Second French machining quote, used to monumental pieces; to be compared with Vandekerckhove.","Tweede Franse freesofferte, vertrouwd met monumentale stukken; te vergelijken met Vandekerckhove.","Zweites französisches Fräsangebot, mit monumentalen Stücken vertraut; mit Vandekerckhove zu vergleichen."),
+       statut:"à contacter", photo:""},
+      {groupe:"usinage", nom:"NeoRen — robots sculpteurs", pays:"FR", lieu:L("France","France","Frankrijk","Frankreich"),
+       site:"https://www.neoren.eu/", realisations:"https://www.neoren.eu/",
+       moyens:L("Conception numérique, usinage robotisé 7 axes pour dégrossissage, finitions à la main par sculpteurs.","Digital design, 7-axis robotic roughing, hand finishing by sculptors.","Digitaal ontwerp, 7-assig robotisch voorbewerken, handafwerking door beeldhouwers.","Digitale Planung, 7-Achs-Roboter zum Schruppen, Handfinish durch Bildhauer."),
+       pourquoi:L("Alternative robot 7 axes si la géométrie évolue vers plus de sculpture (rampe, bords adoucis).","7-axis robot alternative if the geometry evolves towards more sculpture (ramp, softened edges).","Alternatief met 7-assige robot als de geometrie evolueert naar meer sculptuur (helling, verzachte randen).","7-Achs-Roboter-Alternative, falls die Geometrie skulpturaler wird (Rampe, weiche Kanten)."),
+       statut:"à contacter", photo:""},
+      {groupe:"usinage", nom:"TorArt (Litix S.r.l.) / Robotor", pays:"IT", lieu:L("Via Fantiscritti, Carrare (Toscane)","Via Fantiscritti, Carrara (Tuscany)","Via Fantiscritti, Carrara (Toscane)","Via Fantiscritti, Carrara (Toskana)"),
+       site:"https://www.torart.com", realisations:"https://www.torart.com/it-it/stories-1.aspx",
+       moyens:L("Laboratoire fondé en 2004 dans les carrières de Carrare ; robots multi-axes et logiciel OR-OS (fichier 3D → parcours d'outil automatiques) ; atelier des artistes contemporains — Antony Gormley, Jeff Koons, Cattelan, Penone, Barry X Ball, Zaha Hadid, Amanda Levete, Barber & Osgerby.","Laboratory founded in 2004 in the Carrara quarries; multi-axis robots and OR-OS software (3D file → automatic toolpaths); workshop of contemporary artists — Antony Gormley, Jeff Koons, Cattelan, Penone, Barry X Ball, Zaha Hadid, Amanda Levete, Barber & Osgerby.","Laboratorium opgericht in 2004 in de groeven van Carrara; meerassige robots en OR-OS-software (3D-bestand → automatische gereedschapsbanen); atelier van hedendaagse kunstenaars — Antony Gormley, Jeff Koons, Cattelan, Penone, Barry X Ball, Zaha Hadid, Amanda Levete, Barber & Osgerby.","2004 in den Steinbrüchen von Carrara gegründetes Labor; mehrachsige Roboter und OR-OS-Software (3D-Datei → automatische Werkzeugbahnen); Werkstatt zeitgenössischer Künstler — Antony Gormley, Jeff Koons, Cattelan, Penone, Barry X Ball, Zaha Hadid, Amanda Levete, Barber & Osgerby."),
+       pourquoi:L("Référence mondiale de l'usinage robotisé d'œuvres d'art à partir d'un fichier 3D, avec l'habitude du dialogue artiste ↔ machine que ce projet demande. La distance pénalise le transport (2 × 7–10 t) ; à retenir comme étalon de prix et de méthode, ou comme atelier si la qualité du rendu prime.","World reference for robotic machining of artworks from a 3D file, used to the artist ↔ machine dialogue this project requires. Distance penalises transport (2 × 7–10 t); to be kept as a price and method benchmark, or as the workshop if finish quality comes first.","Wereldreferentie voor het robotisch frezen van kunstwerken vanuit een 3D-bestand, vertrouwd met de dialoog kunstenaar ↔ machine die dit project vraagt. De afstand bezwaart het transport (2 × 7–10 t); te behouden als ijkpunt voor prijs en methode, of als atelier als de kwaliteit van de afwerking primeert.","Weltreferenz für das robotische Fräsen von Kunstwerken aus einer 3D-Datei, geübt im Dialog Künstlerin ↔ Maschine, den dieses Projekt verlangt. Die Entfernung belastet den Transport (2 × 7–10 t); als Preis- und Methodenmaßstab zu behalten, oder als Werkstatt, wenn die Oberflächenqualität vorgeht."),
+       statut:"à contacter", photo:"https://www.3dnatives.com/en/wp-content/uploads/sites/2/2023/10/amore-psiche-min.png", photoCredit:"© Laura Veschi / ROBOTOR / TorArt — via 3Dnatives",
+       photoLegende:L("Réplique de « Amour et Psyché » usinée par ROBOTOR dans un bloc de Carrare de 10 t — le même ordre de grandeur que notre bloc brut.","Replica of “Cupid and Psyche” machined by ROBOTOR from a 10 t Carrara block — the same order of magnitude as our raw block.","Replica van “Amor en Psyche” gefreesd door ROBOTOR uit een Carrara-blok van 10 t — dezelfde grootteorde als ons ruwe blok.","Replik von „Amor und Psyche“, von ROBOTOR aus einem 10-t-Carrara-Block gefräst — dieselbe Größenordnung wie unser Rohblock.")},
+      {groupe:"beton", nom:"Decomo", pays:"BE", lieu:L("Mouscron (Hainaut)","Mouscron (Hainaut)","Moeskroen (Henegouwen)","Mouscron (Hennegau)"),
+       site:"https://www.decomo.be/", realisations:"https://www.decomo.be/",
+       moyens:L("Béton architectonique préfabriqué (ISO 9001, BENOR) ; finitions lisse, lavé, acidé, sablé, poli ; inserts de pierre naturelle ; éléments sur mesure livrés finis.","Precast architectural concrete (ISO 9001, BENOR); smooth, washed, acid-etched, sandblasted, polished finishes; natural stone inserts; bespoke elements delivered finished.","Geprefabriceerd architectonisch beton (ISO 9001, BENOR); afwerkingen glad, gewassen, gezuurd, gezandstraald, gepolijst; natuursteeninserts; elementen op maat afgewerkt geleverd.","Vorgefertigter Architekturbeton (ISO 9001, BENOR); glatt, gewaschen, gesäuert, sandgestrahlt, poliert; Natursteineinlagen; maßgefertigte Elemente fertig geliefert."),
+       pourquoi:L("Préfabricant belge capable d'une pièce unique en béton couleur sable, avec caisson et châssis noyés. Contre-devis à celui de St-Gall.","Belgian precaster able to make a one-off piece in sand-coloured concrete, with housing and frame cast in. Counter-quote to St. Gallen's.","Belgische prefabrikant die een uniek stuk in zandkleurig beton kan maken, met ingestorte kast en kader. Tegenofferte voor die van St. Gallen.","Belgischer Fertigteilhersteller für ein Einzelstück in sandfarbenem Beton mit eingegossenem Kasten und Rahmen. Gegenangebot zu St. Gallen."),
+       statut:"à contacter", photo:"", photoLegende:L("Visuel à ajouter — demander des références de pièces massives (bancs, socles, mobilier urbain).","Visual to be added — ask for references of massive pieces (benches, plinths, street furniture).","Beeld toe te voegen — referenties vragen van massieve stukken (banken, sokkels, straatmeubilair).","Bild folgt — Referenzen massiver Stücke erfragen (Bänke, Sockel, Stadtmöbel).")},
+      {groupe:"pilotage", nom:"Kunstgiesserei St. Gallen AG", pays:"CH", lieu:L("Sittertalstrasse 34, CH-9014 St. Gallen","Sittertalstrasse 34, CH-9014 St. Gallen","Sittertalstrasse 34, CH-9014 St. Gallen","Sittertalstrasse 34, CH-9014 St. Gallen"),
+       site:"https://www.kunstgiesserei.ch/", realisations:"https://www.kunstgiesserei.ch/", contact:"Eugen Bergmann — Project Management",
+       moyens:L("Fonderie d'art, construction numérique, pierre reconstituée ; interlocuteur de l'artiste pour le lot bronze + socle.","Art foundry, digital construction, reconstituted stone; the artist's contact for the bronze + base lot.","Kunstgieterij, digitale constructie, kunststeen; aanspreekpunt van de kunstenaar voor het lot brons + sokkel.","Kunstgießerei, digitale Konstruktion, Kunststein; Ansprechpartner der Künstlerin für das Los Bronze + Sockel."),
+       pourquoi:L("Seul chiffrage existant pour le socle : 40 kCHF en pierre reconstituée (sept. 2026). À faire détailler : part moule / part coulée.","Only existing figure for the base: 40 kCHF in reconstituted stone (Sept. 2026). To be broken down: mould share / casting share.","Enige bestaande raming voor de sokkel: 40 kCHF in kunststeen (sept. 2026). Te laten detailleren: aandeel mal / aandeel gieten.","Einzige vorhandene Kalkulation für den Sockel: 40 kCHF in Kunststein (Sept. 2026). Aufschlüsseln lassen: Anteil Form / Anteil Guss."),
+       statut:"devis reçu", photo:""}
+    ]
+  },
+
+  etapes: {
+    titre: L("Prochaines étapes","Next steps","Volgende stappen","Nächste Schritte"),
+    items: [
+      L("Trancher avec Eva : pierre vraie (A/B) ou coulée (C) — choix artistique avant budget.","Decide with Eva: real stone (A/B) or cast (C) — artistic choice before budget.","Beslissen met Eva: echte steen (A/B) of gegoten (C) — artistieke keuze vóór budget.","Mit Eva entscheiden: echter Stein (A/B) oder Guss (C) — künstlerische Wahl vor dem Budget."),
+      L("Vérifier en carrière la faisabilité d'un bloc de 2,3 m de large d'un seul banc ; sinon variante 2 blocs.","Check at the quarry the feasibility of a 2.3 m wide block from a single bed; otherwise 2-block variant.","In de groeve de haalbaarheid nagaan van een blok van 2,3 m breed uit één bank; anders variant met 2 blokken.","Im Steinbruch die Machbarkeit eines 2,3 m breiten Blocks aus einer Bank prüfen; sonst Variante mit 2 Blöcken."),
+      L("Lancer 2 devis bloc (Maffle + carrière bourguignonne) et 2 devis usinage (Vandekerckhove + atelier français).","Launch 2 block quotes (Maffle + Burgundy quarry) and 2 machining quotes (Vandekerckhove + French workshop).","2 blokoffertes aanvragen (Maffle + Bourgondische groeve) en 2 freesoffertes (Vandekerckhove + Frans atelier).","2 Blockangebote (Maffle + burgundischer Steinbruch) und 2 Fräsangebote (Vandekerckhove + französische Werkstatt) einholen."),
+      L("Demander à St-Gall le détail moule / coulée ; contre-devis Decomo.","Ask St. Gallen for the mould / casting breakdown; counter-quote from Decomo.","St. Gallen om de opsplitsing mal / gieten vragen; tegenofferte Decomo.","St. Gallen um die Aufschlüsselung Form / Guss bitten; Gegenangebot Decomo."),
+      L("Échantillons : Comblanchien sablé, Massangis jaune, Euville, béton sable — à présenter à Eva.","Samples: sandblasted Comblanchien, yellow Massangis, Euville, sand-coloured concrete — to be shown to Eva.","Stalen: gezandstraald Comblanchien, geel Massangis, Euville, zandkleurig beton — voor te leggen aan Eva.","Muster: sandgestrahltes Comblanchien, gelbes Massangis, Euville, sandfarbener Beton — Eva vorzulegen."),
+      L("Caler le plan V00 sur les dossiers vitrine et aquarium : réservations des montants à 500 mm de profondeur, entraxe 1 780 ; niche pour 33 blocs, caisson 2 324 × 453.","Align drawing V00 with the showcase and aquarium files: upright recesses 500 mm deep, centres 1,780; niche for 33 blocks, housing 2,324 × 453.","Plan V00 afstemmen op de dossiers vitrine en aquarium: uitsparingen stijlen 500 mm diep, hartafstand 1 780; nis voor 33 blokken, kast 2 324 × 453.","Plan V00 mit den Dossiers Vitrine und Aquarium abstimmen: Pfostenaussparungen 500 mm tief, Achsabstand 1 780; Nische für 33 Blöcke, Kasten 2 324 × 453.")
+    ]
+  },
+
+  documents: [
+    {groupe: L("Plans du socle","Base drawings","Sokkelplannen","Sockelpläne"), items:[
+      {id:"LV-BA-PL-00", rev:"0", date:"22-09-26", statut:"ÉTUDE", pages:1, thumb:"docs/thumbs/base_V00.jpg", auteur:L("J. Miceli","J. Miceli","J. Miceli","J. Miceli"), titre:L("Base mono bloc V00 — plan coté","Monolithic base V00 — dimensioned drawing","Monoliet sokkel V00 — bemaat plan","Monolithischer Sockel V00 — bemaßter Plan"), files:[{fmt:"PDF", u:"docs/base_mono_bloc_V00.pdf"},{fmt:"PNG", u:"docs/png/base_mono_bloc_V00.png"}]},
+      {id:"LV-BA-PL-01", rev:"1", date:"22-09-26", statut:"ÉTUDE", pages:1, thumb:"docs/thumbs/base_cplt.jpg", auteur:L("J. Miceli","J. Miceli","J. Miceli","J. Miceli"), titre:L("Ensemble base + écran + cristaux (v01 260922)","Base + screen + crystals assembly (v01 260922)","Geheel sokkel + scherm + kristallen (v01 260922)","Gesamtansicht Sockel + Schirm + Kristalle (v01 260922)"), files:[{fmt:"PDF", u:"docs/base_cplt_260922.pdf"},{fmt:"PNG", u:"docs/png/base_cplt_260922.png"}]},
+      {id:"LV-BA-PL-02", rev:"1", date:"22-09-26", statut:"ESQUISSE", pages:1, thumb:"docs/thumbs/base_courbe.jpg", auteur:L("J. Miceli","J. Miceli","J. Miceli","J. Miceli"), titre:L("Variante écran courbe (essai 1)","Curved screen variant (trial 1)","Variant gebogen scherm (proef 1)","Variante gebogener Schirm (Versuch 1)"), files:[{fmt:"PDF", u:"docs/base_cplt_courbe_260922.pdf"},{fmt:"PNG", u:"docs/png/base_cplt_courbe_260922.png"}]}
+    ]},
+    {groupe: L("Maquette 3D","3D model","3D-model","3D-Modell"), items:[
+      {id:"LV-BA-3D-01", rev:"1", date:"25-09-26", statut:"ÉTUDE", thumb:"docs/thumbs/rendu.jpg", auteur:L("J. Miceli, Inventor","J. Miceli, Inventor","J. Miceli, Inventor","J. Miceli, Inventor"), titre:L("Monobloc v01 — modèle GLB (dérivé de l'OBJ Inventor v01 260922) et maquette interactive","Monolith v01 — GLB model (derived from the Inventor OBJ v01 260922) and interactive viewer","Monoliet v01 — GLB-model (afgeleid van de Inventor-OBJ v01 260922) en interactieve maquette","Monolith v01 — GLB-Modell (aus der Inventor-OBJ v01 260922) und interaktives Modell"), files:[{fmt:"GLB", u:"docs/monobloc_v01.glb"},{fmt:"JPEG", u:"img/rendu_260924.jpeg"},{fmt:"monobloc.html", u:"monobloc.html", ext:true}]}
+    ]},
+    {groupe: L("Châssis de l'écran (dossier vitrine)","Screen frame (showcase file)","Schermkader (dossier vitrine)","Schirmrahmen (Dossier Vitrine)"), items:[
+      {id:"LV-VL-CH-01", rev:"1", date:"25-09-26", statut:"ÉTUDE", thumb:"docs/thumbs/chassis_v01.jpg", titre:L("Châssis v01 U 80×40×5 316L — trois vues, montants 1 720 dont 500 encastrés","Frame v01 U 80×40×5 316L — three views, uprights 1,720 incl. 500 embedded","Kader v01 U 80×40×5 316L — drie zichten, stijlen 1 720 waarvan 500 ingestort","Rahmen v01 U 80×40×5 316L — drei Ansichten, Pfosten 1 720 davon 500 eingelassen"), files:[{fmt:"PNG", u:"docs/vitrine/ecran_v01_U80x40.png"},{fmt:"STL", u:"docs/vitrine/ecran_v01_U80x40.stl"},{fmt:"MD", u:"docs/vitrine/NOTE_chassis_v01_vent.md"}]},
+      {id:"LV-VL-CAO-00", rev:"0", date:"24-09-26", statut:"ÉTUDE", thumb:"docs/thumbs/step_v00.jpg", auteur:L("J. Miceli, Inventor","J. Miceli, Inventor","J. Miceli, Inventor","J. Miceli, Inventor"), titre:L("STEP « ecran v00 100x40x3 » — châssis tube 100×40×3, montants 1 728 (1 200 + 528 encastrés)","STEP “ecran v00 100x40x3” — 100×40×3 tube frame, uprights 1,728 (1,200 + 528 embedded)","STEP “ecran v00 100x40x3” — kader buis 100×40×3, stijlen 1 728 (1 200 + 528 ingestort)","STEP „ecran v00 100x40x3“ — Rohrrahmen 100×40×3, Pfosten 1 728 (1 200 + 528 eingelassen)"), files:[{fmt:"STEP", u:"docs/vitrine/ecran_v00_100x40x3.stp"},{fmt:"PNG", u:"docs/vitrine/ecran_v00_vues.png"}]}
+    ]},
+    {groupe: L("Dossiers liés","Related files","Verwante dossiers","Verwandte Dossiers"), items:[
+      {titre:L("Dossier de la vitrine lenticulaire (principe, châssis, vent, fournitures)","Lenticular showcase file (principle, frame, wind, supplies)","Dossier lenticulaire vitrine (principe, kader, wind, leveringen)","Dossier Lentikular-Vitrine (Prinzip, Rahmen, Wind, Lieferungen)"), files:[{fmt:"vitrine-lenticulaire.vercel.app", u:"https://vitrine-lenticulaire.vercel.app/?code=EVA", ext:true}]},
+      {titre:L("Dossier de la vitrine « aquarium » des cristaux","Crystal “aquarium” showcase file","Dossier kristallen “aquarium”-vitrine","Dossier Kristall-Vitrine „Aquarium“"), files:[{fmt:"aquarium-k9.vercel.app", u:"https://aquarium-k9.vercel.app/?code=EVA", ext:true}]},
+      {titre:L("Site principal du projet (code EVA)","Main project site (code EVA)","Hoofdsite van het project (code EVA)","Hauptseite des Projekts (Code EVA)"), files:[{fmt:"veilleurs-xi.vercel.app", u:"https://veilleurs-xi.vercel.app", ext:true}]}
+    ]}
   ],
 
-  // ---- Sous-traitants -----------------------------------------------------
-  // groupe : "bloc" | "usinage" | "beton" | "pilotage"
-  // statut : "à contacter" | "contacté" | "devis reçu" | "écarté"
-  soustraitants: [
-    {
-      groupe: "usinage", nom: "Monument Vandekerckhove", pays: "BE", lieu: "Ingelmunster (W-Vl.), ~40 km de Westende",
-      site: "https://www.monument-vandekerckhove.be/fr/pierre-naturelle/atelier-de-travail-de-la-pierre-naturelle",
-      realisations: "https://www.monument-vandekerckhove.be/fr/pierre-naturelle",
-      moyens: "Parc de scies numériques, robots 5 et 6 axes, monowire ; pièces uniques finies à la main ; restauration de monuments (cathédrales, façades) et art.",
-      pourquoi: "Le plus proche du site : évite un long transport de la pièce finie (7 t). Capacité 5/6 axes suffisante pour un usinage 2,5D.",
-      statut: "à contacter",
-      photo: "", photoCredit: "", photoLegende: "Visuel à ajouter — voir la page « Atelier de travail de la pierre naturelle »."
-    },
-    {
-      groupe: "bloc", nom: "Carrières de Maffle (Marbrerie de Soignies)", pays: "BE", lieu: "Maffle (Ath) — showroom et atelier ; siège Soignies",
-      site: "https://carrieresmaffle.be/",
-      realisations: "https://carrieresmaffle.be/blocs-de-stock-en-pierres-de-france/",
-      contact: "info@carrieresmaffle.be · +32 68 28 20 49",
-      moyens: "Blocs de stock en Massangis, Euville, Savonnières, Semond et Comblanchien ; débit 6 faces sciées pour confrères ; pierre bleue.",
-      pourquoi: "Fournisseur belge des pierres de Bourgogne : permet un devis parallèle Comblanchien / Massangis / Euville sans passer par la France.",
-      statut: "à contacter",
-      photo: "https://carrieresmaffle.be/wp-content/uploads/2022/10/rocamat-massangis-3.jpg",
-      photoCredit: "© Carrières de Maffle — réception de blocs de Massangis (Rocamat)",
-      photoLegende: "Blocs bruts de Massangis réceptionnés en carrière : l'échelle des blocs disponibles est le premier point à vérifier."
-    },
-    {
-      groupe: "bloc", nom: "Le Comptoir des Pierres", pays: "FR", lieu: "Comblanchien (Côte-d'Or)",
-      site: "https://www.lecomptoirdespierres.com/",
-      realisations: "https://www.lecomptoirdespierres.com/fr/batiment/522-bloc-pierre-6-faces-sciees.html",
-      moyens: "Blocs 6 faces sciées sur dimensions (Lanvignes, Semond, Massangis, Comblanchien, Corton…) ; tranches jusqu'à ~230 × 140 cm ; finitions adouci, brossé, flammé.",
-      pourquoi: "Référence de prix publique : 2 900 € HT/m³ pour Lanvignes et Semond en 6 faces sciées. Atelier au pied de la carrière de Comblanchien.",
-      statut: "à contacter",
-      photo: "", photoCredit: "", photoLegende: "Visuel à ajouter."
-    },
-    {
-      groupe: "bloc", nom: "Les Carrières de Corton / carrières de la Côte", pays: "FR", lieu: "Nuits-Saint-Georges (Côte-d'Or)",
-      site: "https://www.lescarrieresdecorton.fr/pierres-de-bourgogne/",
-      realisations: "https://www.lescarrieresdecorton.fr/",
-      moyens: "Extraction Comblanchien, Corton, Chassagne ; pierres dures de la Côte (porosité 0,5–6 %).",
-      pourquoi: "Source directe du Comblanchien prescrit sur le plan V00 ; à interroger sur la faisabilité d'un bloc 2,9 × 2,3 × 0,6 m d'un seul banc.",
-      statut: "à contacter",
-      photo: "", photoCredit: "", photoLegende: "Visuel à ajouter."
-    },
-    {
-      groupe: "usinage", nom: "SNBR", pays: "FR", lieu: "Troyes (Aube)",
-      site: "https://www.snbr.fr/",
-      realisations: "https://www.snbr.fr/",
-      moyens: "Taille de pierre et sculpture avec robots d'usinage ; restauration de monuments historiques (cathédrale de Troyes, etc.).",
-      pourquoi: "Second devis usinage français, habitué aux pièces monumentales ; à confronter à Vandekerckhove.",
-      statut: "à contacter",
-      photo: "", photoCredit: "", photoLegende: "Visuel à ajouter."
-    },
-    {
-      groupe: "usinage", nom: "NeoRen — robots sculpteurs", pays: "FR", lieu: "France",
-      site: "https://www.neoren.eu/",
-      realisations: "https://www.neoren.eu/",
-      moyens: "Conception numérique, usinage robotisé 7 axes pour dégrossissage, finitions à la main par sculpteurs.",
-      pourquoi: "Alternative robot 7 axes si la géométrie évolue vers plus de sculpture (rampe, bords adoucis).",
-      statut: "à contacter",
-      photo: "", photoCredit: "", photoLegende: "Visuel à ajouter."
-    },
-    {
-      groupe: "usinage", nom: "TorArt (Litix S.r.l.) / Robotor", pays: "IT", lieu: "Via Fantiscritti, Carrare (Toscane)",
-      site: "https://www.torart.com",
-      realisations: "https://www.torart.com/it-it/stories-1.aspx",
-      moyens: "Laboratoire fondé en 2004 dans les carrières de Carrare ; robots multi-axes et logiciel OR-OS (fichier 3D → parcours d'outil automatiques) ; atelier des artistes contemporains — Antony Gormley, Jeff Koons, Cattelan, Penone, Barry X Ball, Zaha Hadid, Amanda Levete, Barber & Osgerby.",
-      pourquoi: "Référence mondiale de l'usinage robotisé d'œuvres d'art à partir d'un fichier 3D, avec l'habitude du dialogue artiste ↔ machine que ce projet demande. La distance pénalise le transport (2 × 7–10 t) ; à retenir comme étalon de prix et de méthode, ou comme atelier si la qualité du rendu prime.",
-      statut: "à contacter",
-      photo: "https://www.3dnatives.com/en/wp-content/uploads/sites/2/2023/10/amore-psiche-min.png",
-      photoCredit: "© Laura Veschi / ROBOTOR / TorArt — via 3Dnatives",
-      photoLegende: "Réplique de « Amour et Psyché » usinée par ROBOTOR dans un bloc de Carrare de 10 t — le même ordre de grandeur que notre bloc brut."
-    },
-    {
-      groupe: "beton", nom: "Decomo", pays: "BE", lieu: "Mouscron (Hainaut)",
-      site: "https://www.decomo.be/",
-      realisations: "https://www.decomo.be/",
-      moyens: "Béton architectonique préfabriqué (ISO 9001, BENOR) ; finitions lisse, lavé, acidé, sablé, poli ; inserts de pierre naturelle ; éléments sur mesure livrés finis.",
-      pourquoi: "Préfabricant belge capable d'une pièce unique en béton couleur sable, avec caisson et châssis noyés. Contre-devis à celui de St-Gall.",
-      statut: "à contacter",
-      photo: "", photoCredit: "", photoLegende: "Visuel à ajouter — demander des références de pièces massives (bancs, socles, mobilier urbain)."
-    },
-    {
-      groupe: "pilotage", nom: "Kunstgiesserei St. Gallen AG", pays: "CH", lieu: "Sittertalstrasse 34, CH-9014 St. Gallen",
-      site: "https://www.kunstgiesserei.ch/",
-      realisations: "https://www.kunstgiesserei.ch/",
-      contact: "Eugen Bergmann — Project Management",
-      moyens: "Fonderie d'art, construction numérique, pierre reconstituée ; interlocuteur de l'artiste pour le lot bronze + socle.",
-      pourquoi: "Seul chiffrage existant pour le socle : 40 kCHF en pierre reconstituée (sept. 2026). À faire détailler : part moule / part coulée.",
-      statut: "devis reçu",
-      photo: "", photoCredit: "", photoLegende: "Visuel à ajouter."
-    }
-  ],
-
-  // ---- Prochaines étapes -----------------------------------------------------
-  etapes: [
-    "Trancher avec Eva : pierre vraie (A/B) ou coulée (C) — choix artistique avant budget.",
-    "Vérifier en carrière la faisabilité d'un bloc de 2,3 m de large d'un seul banc ; sinon variante 2 blocs.",
-    "Lancer 2 devis bloc (Maffle + carrière bourguignonne) et 2 devis usinage (Vandekerckhove + atelier français).",
-    "Demander à St-Gall le détail moule / coulée ; contre-devis Decomo.",
-    "Échantillons : Comblanchien sablé, Massangis jaune, Euville, béton sable — à présenter à Eva."
-  ],
-
-  // ---- Journal des mises à jour ----------------------------------------------
   journal: [
-    { date: "24-09-2026", texte: "Création du dossier : objet, plans V00, comparaison des trois filières, fiches sous-traitants." },
-    { date: "25-09-2026", texte: "Maquette 3D interactive du monobloc ajoutée (monobloc.html, modèle GLB dérivé de l'OBJ Inventor v01 260922)." },
-    { date: "25-09-2026", texte: "Site en ligne : base-les-veilleurs.vercel.app, mise à jour automatique à chaque commit GitHub." },
-    { date: "24-09-2026", texte: "Fiche TorArt complétée : site officiel torart.com, page Stories (réalisations pour artistes, dont Gormley)." }
+    {d:"24-09-26", t:L("Création du dossier : objet, plans V00, comparaison des trois filières, fiches sous-traitants.","File created: object, V00 drawings, comparison of the three routes, subcontractor cards.","Aanmaak van het dossier: object, plannen V00, vergelijking van de drie kanalen, fiches onderaannemers.","Anlage des Dossiers: Objekt, Pläne V00, Vergleich der drei Wege, Karten der Nachunternehmer.")},
+    {d:"24-09-26", t:L("Fiche TorArt complétée : site officiel torart.com, page Stories (réalisations pour artistes, dont Gormley).","TorArt card completed: official site torart.com, Stories page (works for artists, incl. Gormley).","Fiche TorArt aangevuld: officiële site torart.com, pagina Stories (realisaties voor kunstenaars, o.a. Gormley).","Karte TorArt ergänzt: offizielle Website torart.com, Seite Stories (Arbeiten für Künstler, u. a. Gormley).")},
+    {d:"25-09-26", t:L("Maquette 3D interactive du monobloc ajoutée (monobloc.html, modèle GLB dérivé de l'OBJ Inventor v01 260922).","Interactive 3D model of the monolith added (monobloc.html, GLB model derived from the Inventor OBJ v01 260922).","Interactief 3D-model van het monoliet toegevoegd (monobloc.html, GLB-model afgeleid van de Inventor-OBJ v01 260922).","Interaktives 3D-Modell des Monolithen hinzugefügt (monobloc.html, GLB-Modell aus der Inventor-OBJ v01 260922).")},
+    {d:"25-09-26", t:L("Site en ligne : base-les-veilleurs.vercel.app, mise à jour automatique à chaque commit GitHub.","Site online: base-les-veilleurs.vercel.app, automatic update on every GitHub commit.","Site online: base-les-veilleurs.vercel.app, automatische update bij elke GitHub-commit.","Website online: base-les-veilleurs.vercel.app, automatische Aktualisierung bei jedem GitHub-Commit.")},
+    {d:"25-09-26", t:L("v0.4 — charte commune aux trois dossiers (base, vitrine, aquarium) : mêmes styles, barre de titre et cartouche technique ; site en quatre langues (FR / EN / NL / DE) par onglets ; section Documents avec vignette, numéro, révision et statut, plans en PDF et PNG ; maquette 3D restylée.","v0.4 — common charter for the three files (base, showcase, aquarium): same styles, title bar and technical title block; site in four languages (FR / EN / NL / DE) via tabs; Documents section with thumbnail, number, revision and status, drawings in PDF and PNG; 3D viewer restyled.","v0.4 — gemeenschappelijk charter voor de drie dossiers (sokkel, vitrine, aquarium): dezelfde stijlen, titelbalk en technisch cartouche; site in vier talen (FR / EN / NL / DE) via tabbladen; sectie Documenten met miniatuur, nummer, revisie en status, plannen in PDF en PNG; 3D-model herstijld.","v0.4 — gemeinsame Charta für die drei Dossiers (Sockel, Vitrine, Aquarium): gleiche Stile, Titelleiste und technisches Schriftfeld; Website in vier Sprachen (FR / EN / NL / DE) über Reiter; Abschnitt Dokumente mit Vorschaubild, Nummer, Revision und Status, Pläne als PDF und PNG; 3D-Modell neu gestaltet.")}
   ]
 };
