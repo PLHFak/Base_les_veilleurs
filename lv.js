@@ -73,12 +73,16 @@
     const qc=qs.get("code");
     if(qc&&qc.toUpperCase()==="EVA"){sessionStorage.setItem("lv","1");qs.delete("code");history.replaceState(null,"",location.pathname+(qs.toString()?"?"+qs:""))}
     const g=document.getElementById("gate");if(!g)return;
-    if(["1","2"].includes(sessionStorage.getItem("lv"))){g.remove();return}
+    if(["1","2","3"].includes(sessionStorage.getItem("lv"))){g.remove();return}
     g.innerHTML=`<form><p>${t(UI.code)}</p><input id="code" type="password" autofocus><button>${t(UI.entrer)}</button></form>`;
-    g.querySelector("form").addEventListener("submit",e=>{e.preventDefault();const i=g.querySelector("#code"),v=i.value.trim();
-      if(v.toUpperCase()==="EVA"){sessionStorage.setItem("lv","1");g.remove();track("view")}
-      else if(v.length>=3){sessionStorage.setItem("lv","2");sessionStorage.setItem("lv_code",v);g.remove();statsInit()}
-      else i.value=""});
+    // Code saisi : vérifié côté serveur (/api/gate). « team » = mot de passe du projet (visite non comptée), « admin » = code administrateur (chapitre Fréquentation).
+    g.querySelector("form").addEventListener("submit",e=>{e.preventDefault();const i=g.querySelector("#code"),v=i.value.trim();if(v.length<3){i.value="";return}
+      i.disabled=true;
+      fetch("/api/gate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code:v})}).then(r=>r.ok?r.json():null).then(j=>{
+        if(j&&j.role==="admin"){sessionStorage.setItem("lv","2");sessionStorage.setItem("lv_code",v);g.remove();statsInit()}
+        else if(j&&j.role==="team"){sessionStorage.setItem("lv","3");g.remove()}
+        else{i.disabled=false;i.value="";i.focus()}
+      }).catch(()=>{i.disabled=false;i.value=""})});
   }
   const isAdmin=()=>sessionStorage.getItem("lv")==="2";
 
