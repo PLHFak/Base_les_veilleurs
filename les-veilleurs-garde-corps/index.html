@@ -78,11 +78,14 @@ try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon){let sid=session
   #dossier:hover{background:var(--acc);color:#fff}
   </style>
   <script>(function(){
-    const nl=/^nl/i.test((typeof qs!=='undefined'&&qs.get('lang'))||new URLSearchParams(location.search).get('lang')||'');   // qs : lu par le script d'accès avant qu'il nettoie l'URL
+    const lg=((typeof qs!=='undefined'&&qs.get('lang'))||new URLSearchParams(location.search).get('lang')||'').slice(0,2).toLowerCase();   // qs : lu par le script d'accès avant qu'il nettoie l'URL
+    const nl=lg==='nl', en=lg==='en';
     const T={h:"Een glazen scherm voor een kunstwerk aan zee",p1:"« Les Veilleurs » is een kunstwerk van Eva L'Hoest. Boven een stenen sokkel omsluit een scherm van 180 × 120 cm een heldere lenticulaire plaat: het zicht erdoorheen verandert met de positie van de toeschouwer.",p2:"We zoeken het atelier dat deze ingeklemde beglazing zal maken. Dit model toont het geheel; het technisch dossier (presentatie en plannen) staat voor u klaar.",b1:"Het 3D-model bekijken",b2:"Technisch dossier openen ↗",btn:"Technisch dossier ↗"};
-    if(nl)document.querySelectorAll('[data-t]').forEach(e=>{if(T[e.dataset.t])e.textContent=T[e.dataset.t]});
+    const E={h:"A glass screen for a seafront artwork",p1:"“Les Veilleurs” is an artwork by Eva L'Hoest. Above a stone base, a 180 × 120 cm screen encloses a clear lenticular sheet: the view through it changes with the viewer's position.",p2:"We are looking for the workshop that will make this embedded glass panel. This model shows the whole piece; the technical folder (presentation and drawings) is at your disposal.",b1:"Explore the 3D model",b2:"Open the technical folder ↗",btn:"Technical folder ↗"};
+    const D=nl?T:en?E:null;
+    if(D)document.querySelectorAll('[data-t]').forEach(e=>{if(D[e.dataset.t])e.textContent=D[e.dataset.t]});
     document.getElementById('enter').onclick=()=>document.getElementById('intro').remove();
-    const beacon=()=>{try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon)navigator.sendBeacon('/api/hit',new Blob([JSON.stringify({site:'gardecorps',ev:'dl',lang:nl?'nl':'fr',page:'/',doc:'dossier-drive',sid:sessionStorage.getItem('lv_sid'),ref:sessionStorage.getItem('lv_ref')||null})],{type:'text/plain'}))}catch(e){}};
+    const beacon=()=>{try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon)navigator.sendBeacon('/api/hit',new Blob([JSON.stringify({site:'gardecorps',ev:'dl',lang:lg||'fr',page:'/',doc:'dossier-drive',sid:sessionStorage.getItem('lv_sid'),ref:sessionStorage.getItem('lv_ref')||null})],{type:'text/plain'}))}catch(e){}};
     ['drive','dossier'].forEach(id=>document.getElementById(id).addEventListener('click',beacon));
   })();</script>
   <div id="cart"><div class="k">Document · révision · statut</div><b>LV-GC-3D-01</b> · rév. 1 · 02-10-26 · CONSULTATION<div style="margin-top:4px;color:var(--mute);font-size:9px">© Eva L'Hoest 2026 — Confidentiel. Cotes non contractuelles.</div></div>
