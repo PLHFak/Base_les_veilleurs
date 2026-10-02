@@ -4,7 +4,7 @@
 
 - `data.js` — tout le contenu : objet, filières, ateliers, étapes, documents, journal
 - `monobloc.html` — maquette 3D interactive (three.js, modèle `docs/monobloc_v01.glb`)
-- `garde-corps.html` — variante « écran en vitrage encastré » (modèles `docs/garde-corps/garde-corps_A.glb` et `_B.glb`, options 1 × 1800 et 3 × 600) ; même accès et même mesure `?a=CODE` que `monobloc.html`
+- `les-veilleurs-garde-corps/` — site autonome de la variante « écran en vitrage encastré » (projet Vercel séparé, Root Directory = ce dossier) ; voir son README
 - `docs/` — plans J. Miceli (PDF, PNG rendus dans `docs/png/`), modèle GLB, châssis de l'écran (`docs/vitrine/`)
 - `vercel.json` — déploiement Vercel (preset Other), noindex
 
