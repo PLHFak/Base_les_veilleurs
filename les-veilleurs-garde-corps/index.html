@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Écran en vitrage encastré 3D — Les Veilleurs</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+:root{--bg:#f4f0e8;--th:#ece6d8;--card:#faf7f1;--ink:#2b2b2b;--mute:#7a7a7a;--line:#d9d2c3;--acc:#5a7d8c}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;display:flex;flex-direction:column}
+header{background:var(--th);border-bottom:1px solid var(--line);padding:10px 20px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+header .proj{font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+header h1{font-size:22px;margin:0;font-weight:normal}
+header a{color:var(--acc);text-decoration:none;font-size:14px}header a:hover{text-decoration:underline}
+header .meta{color:var(--mute);font-size:13px;margin-left:auto}
+#stage{flex:1;position:relative;min-height:0}
+canvas{display:block;width:100%;height:100%}
+#hud{position:absolute;left:14px;bottom:14px;background:rgba(250,247,241,.94);border:1px solid var(--line);padding:10px 12px;font-size:13px;line-height:1.5;max-width:360px}
+#hud b{font-weight:normal;color:var(--acc)}
+#hud .sw{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:middle;border:1px solid #0003}
+#load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;font-style:italic;color:var(--mute)}
+#btns{position:absolute;right:14px;top:14px;display:flex;gap:6px;flex-wrap:wrap}
+#btns button{background:#fff;border:1px solid var(--line);padding:5px 10px;font:13px Georgia,serif;cursor:pointer;color:var(--acc);border-radius:3px}
+#btns button:hover{border-color:var(--acc)}
+#cart{position:absolute;right:14px;bottom:14px;background:rgba(255,255,255,.94);border:1px solid var(--ink);padding:6px 10px;font-size:10px;line-height:1.4;max-width:300px;color:var(--ink)}
+#cart .k{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+#gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:99}#gate form{text-align:center}#gate input{font-size:18px;padding:8px 12px;border:1px solid var(--line);border-radius:4px}#gate button{font-size:16px;padding:8px 14px;margin-left:6px;font-family:inherit}
+</style>
+</head>
+<body>
+<div id="gate"><form onsubmit="return gate(event)"><p>Code d'accès</p><input id="code" type="password" autofocus><button>Entrer</button></form></div>
+<script>function gate(e){e.preventDefault();const i=document.getElementById('code'),v=i.value.trim();if(v.length<3){i.value='';return false}i.disabled=true;
+fetch('/api/gate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:v})}).then(r=>r.ok?r.json():null).then(j=>{if(j&&(j.role==='admin'||j.role==='team')){sessionStorage.setItem('lv',j.role==='admin'?'2':'3');if(j.role==='admin')sessionStorage.setItem('lv_code',v);document.getElementById('gate').remove()}else{i.disabled=false;i.value='';i.focus()}}).catch(()=>{i.disabled=false;i.value=''});return false}
+const qs=new URLSearchParams(location.search);const qc=qs.get('code');const qa=(qs.get('a')||'').replace(/[^A-Za-z0-9_-]/g,'').slice(0,24);if(qa)sessionStorage.setItem('lv_ref',qa);if(qc&&qc.toUpperCase()==='EVA'){sessionStorage.setItem('lv','1');history.replaceState(null,'',location.pathname)}
+if(['1','2','3'].includes(sessionStorage.getItem('lv')))document.getElementById('gate').remove();
+try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon){let sid=sessionStorage.getItem('lv_sid')||'';if(!sid){sid=Math.random().toString(36).slice(2,12);sessionStorage.setItem('lv_sid',sid)}navigator.sendBeacon('/api/hit',new Blob([JSON.stringify({site:'gardecorps',ev:'view',lang:'fr',page:'/',sid,ref:sessionStorage.getItem('lv_ref')||null})],{type:'text/plain'}))}}catch(e){}</script>
+
+<header>
+  <span class="proj">Les Veilleurs — Beaufort 27</span>
+  <h1>Écran lenticulaire en vitrage encastré — maquette 3D</h1>
+  <span class="meta">variante « garde-corps » v02 · glisser pour tourner, molette pour zoomer, clic droit pour déplacer</span>
+</header>
+<div id="stage">
+  <div id="load">Chargement du modèle…</div>
+  <div id="btns">
+    <button data-o="A" class="on">Option A · 1 × 1800</button><button data-o="B">Option B · 3 × 600</button>
+    <button data-v="iso">Isométrie</button><button data-v="face">Face</button><button data-v="profil">Profil</button><button data-v="arriere">Arrière</button>
+    <button id="tglStone">Encastrement</button><button id="tglGlass">Verres on/off</button>
+  </div>
+  <div id="hud">
+    <div><span class="sw" style="background:#d9cba9"></span><b>Base</b> Comblanchien, fente 1 880 × 110 × 374 mm</div>
+    <div><span class="sw" style="background:#cfe6ef"></span><b>Vitrage</b> 2 verres feuilletés trempés extra-clairs anti-reflet, <span id="hudW">1 × 1 800</span> × 1 200 visibles</div>
+    <div><span class="sw" style="background:#eef2f7"></span><b>Lenticulaire</b> PETG clair 6 mm, pincé entre les verres</div>
+    <div><span class="sw" style="background:#8a8f94"></span><b>Inox 316L</b> auge encastrée 350 mm, U de finition (option)</div>
+    <div><span class="sw" style="background:#2f7a63"></span><b>Aquarium</b> 33 cristaux K9</div>
+  </div>
+  <div id="cart"><div class="k">Document · révision · statut</div><b>LV-GC-3D-01</b> · rév. 1 · 02-10-26 · CONSULTATION<div style="margin-top:4px;color:var(--mute);font-size:9px">© Eva L'Hoest 2026 — Confidentiel. Cotes non contractuelles.</div></div>
+</div>
+<style>#btns button.on{background:var(--acc);color:#fff;border-color:var(--acc)}</style>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+(function(){
+  const stage=document.getElementById('stage');
+  const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); stage.insertBefore(renderer.domElement,stage.firstChild);
+  const scene=new THREE.Scene(); scene.background=new THREE.Color(0xf4f0e8);
+  const cam=new THREE.PerspectiveCamera(35,1,10,50000);
+  const ctl=new THREE.OrbitControls(cam,renderer.domElement); ctl.enableDamping=true; ctl.target.set(0,-700,700);
+  scene.add(new THREE.HemisphereLight(0xffffff,0xb8a98a,.6));
+  const sun=new THREE.DirectionalLight(0xffffff,.6); sun.position.set(3000,-4000,6000); scene.add(sun);
+  const back=new THREE.DirectionalLight(0xffffff,.3); back.position.set(-3000,3000,2000); scene.add(back);
+  const grid=new THREE.GridHelper(8000,32,0xd9d2c3,0xe8e2d6); grid.rotation.x=Math.PI/2; grid.position.set(0,-950,-1); scene.add(grid);
+
+  // Modèle en Z vers le haut (même repère que monobloc.html), en mm.
+  cam.up.set(0,0,1);
+  const mats={
+    base:new THREE.MeshStandardMaterial({color:0xd9cba9,roughness:.85,metalness:0,transparent:true,opacity:1}),
+    inox:new THREE.MeshStandardMaterial({color:0x8a8f94,roughness:.35,metalness:.7}),
+    glass:new THREE.MeshPhysicalMaterial({color:0xcfe6ef,roughness:.05,metalness:0,transparent:true,opacity:.3,side:THREE.DoubleSide,depthWrite:false}),
+    lens:new THREE.MeshPhysicalMaterial({color:0xeef2f7,roughness:.2,metalness:0,transparent:true,opacity:.35,side:THREE.DoubleSide,depthWrite:false}),
+    crystal:new THREE.MeshPhysicalMaterial({color:0x2f7a63,roughness:.15,metalness:.05,transparent:true,opacity:.85}),
+    rose:new THREE.MeshStandardMaterial({color:0xa89a7c,roughness:.7,metalness:.05,side:THREE.DoubleSide}),
+    dark:new THREE.MeshStandardMaterial({color:0x2a2a2a,roughness:.8})
+  };
+  function classify(path){
+    if(/verre/.test(path)) return 'glass';
+    if(/lenticulaire/.test(path)) return 'lens';
+    if(/\|socle/.test(path)) return 'base';
+    if(/\|rose/.test(path)) return 'rose';
+    if(/cristau|bloc_cristal/.test(path)) return 'crystal';
+    if(/verre_66|fond_noir|mousse|cordon|bande|joint|ruban|silicone|cale_assise|calage/.test(path)) return 'dark';
+    return 'inox';
+  }
+  const loader=new THREE.GLTFLoader(), cache={}; let cur=null, parts={}, ghost=false;
+  function load(o){
+    document.querySelectorAll('#btns [data-o]').forEach(b=>b.classList.toggle('on',b.dataset.o===o));
+    document.getElementById('hudW').textContent=o==='A'?'1 × 1 800':'3 × 600';
+    const show=root=>{ if(cur) scene.remove(cur); cur=root; scene.add(root); parts={};
+      root.traverse(m=>{ if(!m.isMesh) return; let p='',a=m; while(a){p+='|'+(a.name||'');a=a.parent;}
+        const k=classify(p); m.material=mats[k]; m.renderOrder=(k==='glass'||k==='lens')?2:0; (parts[k]=parts[k]||[]).push(m); });
+      const l=document.getElementById('load'); if(l) l.remove(); };
+    if(cache[o]) return show(cache[o]);
+    loader.load('docs/garde-corps_'+o+'.glb',g=>{
+      g.scene.rotation.x=Math.PI/2;   // l'export glTF redresse la CAO en Y ; on revient en Z vers le haut
+      cache[o]=g.scene; show(g.scene); if(!cam.position.lengthSq()) view('iso');
+    },undefined,()=>{const l=document.getElementById('load'); if(l) l.textContent='Modèle introuvable';});
+  }
+  const views={iso:[3800,-5200,3000],face:[0,-7000,900],profil:[-6500,-700,1200],arriere:[0,5200,2200]};
+  function view(k){ cam.position.set(...views[k]); ctl.update(); }
+  document.querySelectorAll('#btns [data-v]').forEach(b=>b.onclick=()=>view(b.dataset.v));
+  document.querySelectorAll('#btns [data-o]').forEach(b=>b.onclick=()=>load(b.dataset.o));
+  document.getElementById('tglGlass').onclick=()=>[...(parts.glass||[]),...(parts.lens||[])].forEach(m=>m.visible=!m.visible);
+  document.getElementById('tglStone').onclick=e=>{ghost=!ghost; e.target.classList.toggle('on',ghost); mats.base.opacity=ghost?.3:1; mats.base.depthWrite=!ghost;};
+  function resize(){ const w=stage.clientWidth,h=stage.clientHeight; renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
+  addEventListener('resize',resize); resize();
+  load('A'); view('iso');
+  (function loop(){ requestAnimationFrame(loop); ctl.update(); renderer.render(scene,cam); })();
+})();
+</script>
+</body>
+</html>
