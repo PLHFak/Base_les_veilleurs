@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/logo.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Écran en vitrage encastré 3D — Les Veilleurs</title>
 <meta name="robots" content="noindex, nofollow">
@@ -10,7 +11,8 @@
 :root{--bg:#f4f0e8;--th:#ece6d8;--card:#faf7f1;--ink:#2b2b2b;--mute:#7a7a7a;--line:#d9d2c3;--acc:#5a7d8c}
 *{box-sizing:border-box}html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;display:flex;flex-direction:column}
-header{background:var(--th);border-bottom:1px solid var(--line);padding:10px 20px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+header{background:var(--th);border-bottom:1px solid var(--line);padding:8px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header .logo{height:40px;width:auto;display:block;flex:none}header .ttl{display:flex;flex-direction:column;gap:1px}
 header .proj{font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 header h1{font-size:22px;margin:0;font-weight:normal}
 header a{color:var(--acc);text-decoration:none;font-size:14px}header a:hover{text-decoration:underline}
@@ -38,8 +40,9 @@ if(['1','2','3'].includes(sessionStorage.getItem('lv')))document.getElementById(
 try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon){let sid=sessionStorage.getItem('lv_sid')||'';if(!sid){sid=Math.random().toString(36).slice(2,12);sessionStorage.setItem('lv_sid',sid)}navigator.sendBeacon('/api/hit',new Blob([JSON.stringify({site:'gardecorps',ev:'view',lang:'fr',page:'/',sid,ref:sessionStorage.getItem('lv_ref')||null})],{type:'text/plain'}))}}catch(e){}</script>
 
 <header>
-  <span class="proj">Les Veilleurs — Beaufort 27</span>
-  <h1>Écran lenticulaire en vitrage encastré — maquette 3D</h1>
+  <img class="logo" src="/logo.svg" alt="Les Veilleurs">
+  <div class="ttl"><span class="proj">Les Veilleurs — Beaufort 27</span>
+  <h1>Écran lenticulaire en vitrage encastré — maquette 3D</h1></div>
   <span class="meta">variante « garde-corps » v02 · glisser pour tourner, molette pour zoomer, clic droit pour déplacer</span>
 </header>
 <div id="stage">
@@ -58,6 +61,7 @@ try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon){let sid=session
   </div>
   <a id="dossier" href="https://drive.google.com/drive/folders/1islwEXjkwEP8PEswUrjBjwHc_8Ix5e0x?usp=sharing" target="_blank" rel="noopener" data-t="btn">Dossier technique ↗</a>
   <div id="intro"><div class="box">
+    <img src="/logo.svg" alt="Les Veilleurs" style="height:72px;width:auto;display:block;margin:0 0 10px">
     <div class="k">Les Veilleurs — Beaufort 27 · Westende</div>
     <h2 data-t="h">Un écran de verre pour une œuvre en bord de mer</h2>
     <p data-t="p1">« Les Veilleurs » est une œuvre de l'artiste Eva L'Hoest. Au-dessus d'un socle en pierre, un écran de 180 × 120 cm enferme une feuille lenticulaire claire : la vue à travers elle change selon la position du spectateur.</p>

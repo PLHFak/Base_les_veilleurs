@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 130" role="img" aria-label="Les Veilleurs — Beaufort 27">
+  <!-- Les Veilleurs : socle en pierre avec la vitrine des cristaux, écran lenticulaire sur deux montants, veilleur assis au bord, veilleuse allongée -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a7d8c" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#5a7d8c" stop-opacity=".05"/>
+    </linearGradient>
+  </defs>
+  <!-- socle : bloc en D vu de trois quarts -->
+  <path d="M30 86 H206 q14 0 14 14 v10 H16 v-10 q0 -14 14 -14 z" fill="#d9cba9" stroke="#2b2b2b" stroke-width="2.2" stroke-linejoin="round"/>
+  <!-- vitrine des 33 cristaux en face avant -->
+  <rect x="46" y="95" width="148" height="9" fill="#faf7f1" stroke="#2b2b2b" stroke-width="1"/>
+  <g stroke="#2b2b2b" stroke-width=".6" opacity=".55">
+    <line x1="59.5" y1="95" x2="59.5" y2="104"/><line x1="73" y1="95" x2="73" y2="104"/><line x1="86.5" y1="95" x2="86.5" y2="104"/><line x1="100" y1="95" x2="100" y2="104"/><line x1="113.5" y1="95" x2="113.5" y2="104"/><line x1="127" y1="95" x2="127" y2="104"/><line x1="140.5" y1="95" x2="140.5" y2="104"/><line x1="154" y1="95" x2="154" y2="104"/><line x1="167.5" y1="95" x2="167.5" y2="104"/><line x1="181" y1="95" x2="181" y2="104"/>
+  </g>
+  <!-- montants encastrés -->
+  <line x1="98" y1="86" x2="98" y2="74" stroke="#2b2b2b" stroke-width="2.4"/>
+  <line x1="208" y1="86" x2="208" y2="74" stroke="#2b2b2b" stroke-width="2.4"/>
+  <!-- écran lenticulaire 3:2 -->
+  <rect x="92" y="10" width="122" height="66" fill="url(#g)" stroke="#2b2b2b" stroke-width="2.4"/>
+  <line x1="92" y1="46" x2="214" y2="46" stroke="#5a7d8c" stroke-width="1.2" opacity=".6"/>
+  <!-- veilleur assis au bord gauche du socle : buste vertical, cuisses à l'horizontale, jambes pendantes devant la face -->
+  <circle cx="38" cy="58" r="5.2" fill="#2b2b2b"/>
+  <path d="M33.5 64 q4.5 -2.4 9 0 l1 14 h-11 z" fill="#2b2b2b"/>
+  <path d="M32.5 78 h18 q2 0 2 2 v3 h-8 v16 h-4 v-16 h-2 v16 h-4 v-16 h-2 z" fill="#2b2b2b"/>
+  <!-- veilleuse allongée sur le socle, tête vers la gauche -->
+  <circle cx="118" cy="81.5" r="4.6" fill="#2b2b2b"/>
+  <path d="M122.5 79 q20 -3.5 38 0 q6 1.2 6 4 l-44 3 z" fill="#2b2b2b"/>
+</svg>
