@@ -56,15 +56,35 @@ try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon){let sid=session
     <div><span class="sw" style="background:#8a8f94"></span><b>Inox 316L</b> auge encastrée 350 mm, U de finition (option)</div>
     <div><span class="sw" style="background:#2f7a63"></span><b>Aquarium</b> 33 cristaux K9</div>
   </div>
-  <div id="docs"><div class="k">Documents à télécharger</div>
-    <a href="docs/telechargements/LV-GC-CONS-01_v02_ecran_lenticulaire_vitrage_garde-corps.pdf" download>Présentation A4 (PDF, 0,5 Mo)</a>
-    <a href="docs/telechargements/LV_ecran_garde-corps_v02_optionA.stp" download>Écran option A — 1 × 1800 (STEP)</a>
-    <a href="docs/telechargements/LV_ecran_garde-corps_v02_optionB.stp" download>Écran option B — 3 × 600 (STEP)</a>
-    <a href="docs/telechargements/LV_base_monobloc_V01_fente_garde-corps.stp" download>Socle avec fente d'encastrement (STEP)</a>
-    <a href="docs/telechargements/les_veilleurs_v02_garde-corps_optionA.stp" download>Ensemble complet (STEP, 6 Mo)</a>
-  </div>
-  <style>#docs{position:absolute;left:14px;top:14px;background:rgba(250,247,241,.94);border:1px solid var(--line);padding:8px 12px;font-size:12px;line-height:1.7;max-width:300px}#docs .k{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}#docs a{display:block;color:var(--acc);text-decoration:none}#docs a:hover{text-decoration:underline}@media (max-width:700px){#docs{display:none}}</style>
-  <script>document.querySelectorAll('#docs a').forEach(l=>l.addEventListener('click',()=>{try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon)navigator.sendBeacon('/api/hit',new Blob([JSON.stringify({site:'gardecorps',ev:'dl',lang:'fr',page:'/',doc:l.getAttribute('href').split('/').pop(),sid:sessionStorage.getItem('lv_sid'),ref:sessionStorage.getItem('lv_ref')||null})],{type:'text/plain'}))}catch(e){}}));</script>
+  <a id="dossier" href="https://drive.google.com/drive/folders/1islwEXjkwEP8PEswUrjBjwHc_8Ix5e0x?usp=sharing" target="_blank" rel="noopener" data-t="btn">Dossier technique ↗</a>
+  <div id="intro"><div class="box">
+    <div class="k">Les Veilleurs — Beaufort 27 · Westende</div>
+    <h2 data-t="h">Un écran de verre pour une œuvre en bord de mer</h2>
+    <p data-t="p1">« Les Veilleurs » est une œuvre de l'artiste Eva L'Hoest. Au-dessus d'un socle en pierre, un écran de 180 × 120 cm enferme une feuille lenticulaire claire : la vue à travers elle change selon la position du spectateur.</p>
+    <p data-t="p2">Nous cherchons l'atelier qui fabriquera ce vitrage encastré. Cette maquette vous montre l'ensemble ; le dossier technique (présentation et plans) est à votre disposition.</p>
+    <div class="go"><button id="enter" data-t="b1">Découvrir la maquette 3D</button><a id="drive" href="https://drive.google.com/drive/folders/1islwEXjkwEP8PEswUrjBjwHc_8Ix5e0x?usp=sharing" target="_blank" rel="noopener" data-t="b2">Ouvrir le dossier technique ↗</a></div>
+  </div></div>
+  <style>
+  #intro{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(244,240,232,.72);backdrop-filter:blur(3px);z-index:5;padding:16px}
+  #intro .box{background:var(--card);border:1px solid var(--line);max-width:560px;padding:22px 26px;box-shadow:0 8px 30px #0001}
+  #intro .k{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+  #intro h2{font-weight:normal;font-size:24px;margin:6px 0 10px}
+  #intro p{font-size:15px;line-height:1.55;margin:0 0 10px}
+  #intro .go{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  #intro button,#intro a{font:15px Georgia,serif;padding:9px 14px;border-radius:3px;cursor:pointer;text-decoration:none}
+  #intro button{background:var(--acc);color:#fff;border:1px solid var(--acc)}
+  #intro a{background:#fff;color:var(--acc);border:1px solid var(--line)}
+  #dossier{position:absolute;left:14px;top:14px;background:#fff;border:1px solid var(--acc);color:var(--acc);padding:6px 12px;font:14px Georgia,serif;text-decoration:none;border-radius:3px}
+  #dossier:hover{background:var(--acc);color:#fff}
+  </style>
+  <script>(function(){
+    const nl=/^nl/i.test((typeof qs!=='undefined'&&qs.get('lang'))||new URLSearchParams(location.search).get('lang')||'');   // qs : lu par le script d'accès avant qu'il nettoie l'URL
+    const T={h:"Een glazen scherm voor een kunstwerk aan zee",p1:"« Les Veilleurs » is een kunstwerk van Eva L'Hoest. Boven een stenen sokkel omsluit een scherm van 180 × 120 cm een heldere lenticulaire plaat: het zicht erdoorheen verandert met de positie van de toeschouwer.",p2:"We zoeken het atelier dat deze ingeklemde beglazing zal maken. Dit model toont het geheel; het technisch dossier (presentatie en plannen) staat voor u klaar.",b1:"Het 3D-model bekijken",b2:"Technisch dossier openen ↗",btn:"Technisch dossier ↗"};
+    if(nl)document.querySelectorAll('[data-t]').forEach(e=>{if(T[e.dataset.t])e.textContent=T[e.dataset.t]});
+    document.getElementById('enter').onclick=()=>document.getElementById('intro').remove();
+    const beacon=()=>{try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon)navigator.sendBeacon('/api/hit',new Blob([JSON.stringify({site:'gardecorps',ev:'dl',lang:nl?'nl':'fr',page:'/',doc:'dossier-drive',sid:sessionStorage.getItem('lv_sid'),ref:sessionStorage.getItem('lv_ref')||null})],{type:'text/plain'}))}catch(e){}};
+    ['drive','dossier'].forEach(id=>document.getElementById(id).addEventListener('click',beacon));
+  })();</script>
   <div id="cart"><div class="k">Document · révision · statut</div><b>LV-GC-3D-01</b> · rév. 1 · 02-10-26 · CONSULTATION<div style="margin-top:4px;color:var(--mute);font-size:9px">© Eva L'Hoest 2026 — Confidentiel. Cotes non contractuelles.</div></div>
 </div>
 <style>#btns button.on{background:var(--acc);color:#fff;border-color:var(--acc)}</style>
