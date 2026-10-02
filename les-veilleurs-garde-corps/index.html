@@ -56,6 +56,15 @@ try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon){let sid=session
     <div><span class="sw" style="background:#8a8f94"></span><b>Inox 316L</b> auge encastrée 350 mm, U de finition (option)</div>
     <div><span class="sw" style="background:#2f7a63"></span><b>Aquarium</b> 33 cristaux K9</div>
   </div>
+  <div id="docs"><div class="k">Documents à télécharger</div>
+    <a href="docs/telechargements/LV-GC-CONS-01_v02_ecran_lenticulaire_vitrage_garde-corps.pdf" download>Présentation A4 (PDF, 0,5 Mo)</a>
+    <a href="docs/telechargements/LV_ecran_garde-corps_v02_optionA.stp" download>Écran option A — 1 × 1800 (STEP)</a>
+    <a href="docs/telechargements/LV_ecran_garde-corps_v02_optionB.stp" download>Écran option B — 3 × 600 (STEP)</a>
+    <a href="docs/telechargements/LV_base_monobloc_V01_fente_garde-corps.stp" download>Socle avec fente d'encastrement (STEP)</a>
+    <a href="docs/telechargements/les_veilleurs_v02_garde-corps_optionA.stp" download>Ensemble complet (STEP, 6 Mo)</a>
+  </div>
+  <style>#docs{position:absolute;left:14px;top:14px;background:rgba(250,247,241,.94);border:1px solid var(--line);padding:8px 12px;font-size:12px;line-height:1.7;max-width:300px}#docs .k{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}#docs a{display:block;color:var(--acc);text-decoration:none}#docs a:hover{text-decoration:underline}@media (max-width:700px){#docs{display:none}}</style>
+  <script>document.querySelectorAll('#docs a').forEach(l=>l.addEventListener('click',()=>{try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon)navigator.sendBeacon('/api/hit',new Blob([JSON.stringify({site:'gardecorps',ev:'dl',lang:'fr',page:'/',doc:l.getAttribute('href').split('/').pop(),sid:sessionStorage.getItem('lv_sid'),ref:sessionStorage.getItem('lv_ref')||null})],{type:'text/plain'}))}catch(e){}}));</script>
   <div id="cart"><div class="k">Document · révision · statut</div><b>LV-GC-3D-01</b> · rév. 1 · 02-10-26 · CONSULTATION<div style="margin-top:4px;color:var(--mute);font-size:9px">© Eva L'Hoest 2026 — Confidentiel. Cotes non contractuelles.</div></div>
 </div>
 <style>#btns button.on{background:var(--acc);color:#fff;border-color:var(--acc)}</style>
