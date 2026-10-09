@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Les Veilleurs — Eva L'Hoest</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f0e8;--paper:#faf7f1;--ink:#26292b;--mute:#6f7375;--line:#ddd5c5;--acc:#5a7d8c;--acc2:#3f5f6c;--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:Inter,system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:19px;line-height:1.55;overflow:hidden}
+#app{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(360px,1fr);height:100vh;height:100dvh}
+/* --- scène 3D --- */
+#stage{position:relative;min-height:0;background:linear-gradient(#e9eef0 0%,#f2efe8 60%,#ebe3d2 100%)}
+#stage canvas{display:block;width:100%;height:100%;outline:none}
+#brand{position:absolute;left:22px;top:18px;pointer-events:none}
+#brand .k{font:500 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+#brand h1{font-weight:400;font-size:44px;line-height:1;margin:6px 0 2px;letter-spacing:.01em}
+#brand .by{font-style:italic;font-size:19px;color:var(--acc2)}
+#variants{position:absolute;left:22px;right:22px;bottom:18px;display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+.vbtn{font:13px/1.25 var(--sans);background:rgba(250,247,241,.92);border:1px solid var(--line);color:var(--ink);padding:8px 12px;border-radius:2px;cursor:pointer;text-align:left;backdrop-filter:blur(4px)}
+.vbtn small{display:block;color:var(--mute);font-size:11px;letter-spacing:.04em}
+.vbtn.main{padding:11px 16px;font-size:15px;border-color:var(--acc)}
+.vbtn.on{background:var(--acc);color:#fff;border-color:var(--acc)}.vbtn.on small{color:#e3ecef}
+.vbtn:hover:not(.on){border-color:var(--acc)}
+#vlabel{position:absolute;right:22px;top:20px;font:12px/1.4 var(--sans);color:var(--mute);text-align:right;max-width:260px;pointer-events:none}
+#load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:italic;font-size:22px;color:var(--mute);pointer-events:none;transition:opacity .4s}
+#hint{position:absolute;right:22px;top:40px;pointer-events:none;font:11px/1.4 var(--sans);color:var(--mute);text-align:right}
+/* --- panneau --- */
+#panel{overflow-y:auto;background:var(--paper);border-left:1px solid var(--line);scroll-behavior:smooth}
+nav{position:sticky;top:0;z-index:2;background:var(--paper);border-bottom:1px solid var(--line);display:flex;gap:2px;padding:0 18px;overflow-x:auto}
+nav a{font:500 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);text-decoration:none;padding:16px 10px 14px;border-bottom:2px solid transparent;white-space:nowrap}
+nav a.on,nav a:hover{color:var(--ink);border-bottom-color:var(--acc)}
+section{padding:30px 34px 10px;max-width:720px}
+section h2{font-weight:400;font-size:30px;margin:0 0 4px}
+.eyebrow{font:500 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin:0 0 10px}
+p{margin:0 0 14px}
+.lead{font-size:22px;line-height:1.45}
+.quote{border-left:2px solid var(--acc);padding:2px 0 2px 18px;margin:18px 0}
+.quote p{font-style:italic}
+.sig{font:13px/1.4 var(--sans);color:var(--mute)}
+details{margin:6px 0 18px}
+summary{cursor:pointer;font:500 13px/1 var(--sans);color:var(--acc2);padding:8px 0;list-style:none}
+summary::before{content:"+ ";}details[open] summary::before{content:"– ";}
+details .full p{font-size:18px}
+/* éléments */
+.el{display:grid;grid-template-columns:116px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--line);cursor:pointer}
+.el:last-child{border-bottom:1px solid var(--line)}
+.el img{width:116px;height:116px;object-fit:cover;background:#e8e2d5}
+.el .ph{width:116px;height:116px;background:radial-gradient(circle at 50% 40%,#f6e7b8,#c9a96a 45%,#2b2d33 100%)}
+.el h3{font-weight:500;font-size:22px;margin:0 0 4px;display:flex;align-items:baseline;gap:8px}
+.el h3 .n{font:500 11px var(--sans);color:var(--acc);letter-spacing:.1em}
+.el p{font-size:17.5px;line-height:1.5;margin:0}
+.el:hover h3,.el.on h3{color:var(--acc2)}
+.el.on{background:linear-gradient(90deg,rgba(90,125,140,.08),transparent)}
+.go{font:12px var(--sans);color:var(--acc);margin-top:6px;display:inline-block}
+/* variantes */
+.vcards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.vc{border:1px solid var(--line);padding:12px 14px;cursor:pointer;background:#fff}
+.vc.on{border-color:var(--acc);box-shadow:inset 3px 0 0 var(--acc)}
+.vc b{font-weight:500;font-size:19px;display:block}
+.vc span{font:12.5px/1.45 var(--sans);color:var(--mute)}
+.vc.prop{grid-column:1/-1}
+.tag{display:inline-block;font:500 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;background:var(--acc);color:#fff;padding:4px 6px;margin-bottom:6px}
+/* galerie */
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 8px}
+.gal figure{margin:0;cursor:zoom-in}.gal figure.w{grid-column:1/-1}
+.gal img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover;background:#e8e2d5}
+.gal figure.w img{aspect-ratio:auto}
+.gal figcaption{font:12px/1.4 var(--sans);color:var(--mute);margin-top:5px}
+footer{padding:26px 34px 40px;font:12px/1.6 var(--sans);color:var(--mute)}
+#lb{position:fixed;inset:0;background:rgba(20,22,24,.92);display:none;align-items:center;justify-content:center;z-index:50;cursor:zoom-out;padding:24px;flex-direction:column}
+#lb img{max-width:100%;max-height:86vh}#lb p{color:#ddd;font:13px var(--sans);margin-top:12px;text-align:center}
+#gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:99}#gate form{text-align:center}#gate input{font-size:18px;padding:8px 12px;border:1px solid var(--line);border-radius:4px}#gate button{font-size:16px;padding:8px 14px;margin-left:6px;font-family:inherit}
+@media (max-width:900px){
+  body{overflow:auto}
+  #app{display:block;height:auto}
+  #stage{height:62vh;height:62svh;position:sticky;top:0;z-index:1}
+  #panel{overflow:visible;border-left:0;position:relative;z-index:2}
+  #brand h1{font-size:32px}#brand{left:16px;top:12px}
+  #variants{left:12px;right:12px;bottom:10px;gap:6px}.vbtn{padding:6px 9px;font-size:12px}.vbtn.main{padding:8px 11px;font-size:13px}.vbtn small{display:none}
+  #vlabel,#hint{display:none}
+  section{padding:24px 16px 6px}footer{padding:20px 16px 34px}
+  .el{grid-template-columns:84px 1fr;gap:12px}.el img,.el .ph{width:84px;height:84px}
+  .vcards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="gate"><form onsubmit="return gate(event)"><p>Code d'accès</p><input id="code" type="password" autofocus><button>Entrer</button></form></div>
+<script>function gate(e){e.preventDefault();const i=document.getElementById('code'),v=i.value.trim();if(v.length<3){i.value='';return false}i.disabled=true;
+fetch('/api/gate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:v})}).then(r=>r.ok?r.json():null).then(j=>{if(j&&(j.role==='admin'||j.role==='team')){sessionStorage.setItem('lv',j.role==='admin'?'2':'3');if(j.role==='admin')sessionStorage.setItem('lv_code',v);document.getElementById('gate').remove()}else{i.disabled=false;i.value='';i.focus()}}).catch(()=>{i.disabled=false;i.value=''});return false}
+const qs=new URLSearchParams(location.search);const qc=qs.get('code');const qa=(qs.get('a')||'').replace(/[^A-Za-z0-9_-]/g,'').slice(0,24);if(qa)sessionStorage.setItem('lv_ref',qa);if(qc&&qc.toUpperCase()==='EVA'){sessionStorage.setItem('lv','1');history.replaceState(null,'',location.pathname)}
+if(['1','2','3'].includes(sessionStorage.getItem('lv')))document.getElementById('gate').remove();
+try{if(sessionStorage.getItem('lv')==='1'&&navigator.sendBeacon){let sid=sessionStorage.getItem('lv_sid')||'';if(!sid){sid=Math.random().toString(36).slice(2,12);sessionStorage.setItem('lv_sid',sid)}navigator.sendBeacon('/api/hit',new Blob([JSON.stringify({site:'base',ev:'view',lang:'fr',page:'/presentation.html',sid,ref:sessionStorage.getItem('lv_ref')||null})],{type:'text/plain'}))}}catch(e){}</script>
+
+<div id="app">
+<div id="stage">
+  <div id="load">Chargement de la maquette…</div>
+  <div id="brand"><div class="k">Beaufort 27 · Westende</div><h1>Les Veilleurs</h1><div class="by">Eva L'Hoest</div></div>
+  <div id="vlabel"></div>
+  <div id="variants">
+    <button class="vbtn main on" data-v="grande">Proposition<small>grand écran 1,80 × 1,20 m</small></button>
+    <button class="vbtn" data-v="triptyque">Variante A<small>triptyque</small></button>
+    <button class="vbtn" data-v="trois_a">Variante B<small>trois écrans, écart large</small></button>
+    <button class="vbtn" data-v="trois_b">Variante C<small>trois écrans, écart serré</small></button>
+  </div>
+  <div id="hint">glisser pour tourner · molette ou pincer pour zoomer<br>cliquer un élément pour s'en approcher</div>
+</div>
+
+<div id="panel">
+<nav id="nav"><a href="#oeuvre" class="on">L'œuvre</a><a href="#texte">Texte curatorial</a><a href="#elements">Les éléments</a><a href="#ecran">L'écran</a><a href="#images">Images</a></nav>
+
+<section id="oeuvre">
+  <p class="eyebrow">Œuvre permanente · 2027</p>
+  <h2>Guetter l'horizon</h2>
+  <p class="lead">Sur la digue de Westende, trois figures veillent face à la mer. Entre elles, un grand écran de verre laisse passer l'horizon et fait disparaître celui qui passe derrière.</p>
+  <p>Sous l'écran, une rangée de blocs de cristal garde, gravées à l'intérieur, des ondes cérébrales. Dans les corps des veilleurs, des storm glass annoncent le temps qui vient. Au pied des figures, une table d'orientation relie l'ensemble.</p>
+  <p>L'œuvre est une commande de la triennale Beaufort 27, de Westtoer et de la commune de Middelkerke. Elle est conçue pour rester sur la digue au moins dix ans.</p>
+  <p class="sig">Faites tourner la maquette à gauche, puis cliquez sur un élément ci-dessous pour vous en approcher.</p>
+</section>
+
+<section id="texte">
+  <p class="eyebrow">Texte curatorial</p>
+  <h2>Une boussole devant l'horizon</h2>
+  <div class="quote">
+    <p>Guetter l'horizon fait partie de ces gestes propres à ceux qui vivent au bord de la mer. Sur la digue de Westende, des veilleurs de métal, courbés, veillent en silence, le regard divaguant dans le lointain. Leurs corps ont l'éclat trouble et strié des choses passées par une machine, comme des images que le temps aurait solidifiées.</p>
+    <p>Ce que ces figures d'attente guettent ne nous est pas tout de suite évident ; mais ce qui se dessine en eux, l'œuvre le rend lisible. Sous l'écran qu'ils encadrent court un socle de blocs de cristal où sont gravées des ondes cérébrales, saisies dans trois états : le sommeil, le geste machinal, la longue méditation devant la mer. Se pencher sur ces blocs, c'est lire le paysage intérieur d'un autre comme on lit un ciel. L'artiste y voit une boussole : ces états du dedans qui nous orientent devant l'horizon.</p>
+    <p>Derrière le bouclier d'invisibilité de l'écran, les corps se dissolvent dans le paysage, à l'image du géant de Middelkerke qui, chaque matin, se perdait dans la mer. Le promeneur qui ose en faire le tour devient à son tour une silhouette qui disparaît, comme s'il franchissait une porte vers le monde de l'esprit.</p>
+  </div>
+  <p class="sig">Leo Marin, curateur — texte du guide visiteurs, Beaufort 27</p>
+  <details><summary>Lire le texte complet</summary><div class="full">
+    <p>Guetter l'horizon fait partie de ces gestes propres à ceux qui vivent au bord de la mer. On s'assoit face au large, on fixe la ligne où le ciel s'appuie sur l'eau, et l'on attend, une voile, un grain, une nouvelle qui ne vient pas encore. Ce que l'œil cherche là, ne se laisse jamais tout à fait saisir car l'avenir n'a pas encore de visage. C'est de cette attente, vieille comme les rivages, qu'Eva L'Hoest a composé son œuvre.</p>
+    <p>Elle l'a peuplée de veilleurs. Des figures assises, courbées, qui veillent en silence sur la digue de Middelkerke, le regard divaguant dans le lointain. Leurs corps ont l'éclat trouble et strié des choses qui sont d'abord passées par une machine : coulés dans un alliage clair et irisé, ils gardent, jusque dans le métal, la mémoire du fichier numérique dont ils sont nés. On dirait des images que le temps aurait solidifiées, arrêtées quelque part entre la présence et le souvenir et la dystopie d'un futur plus proche qu'il n'y paraît.</p>
+    <p>Ce que ces figures d'attente guettent, ne nous est pas tout de suite évident, mais ce qui se dessine en eux comme en nous, l'œuvre le rend lisible. Sous l'écran qu'ils encadrent, court un long socle de blocs de cristal. Depuis des années, Eva L'Hoest s'emploie à donner un corps à ce qui n'en a pas : un souvenir, des images mentales, des états de conscience. Ces corps, elle parvient à les produire au moyen de scanners, d'imagerie médicale ou d'image de synthèse. Ici, elle a fait graver dans le verre les ondes cérébrales de veilleurs anonymes. Ces ondes sont saisies dans trois états : le sommeil, le geste machinal, et la longue méditation devant la mer. De ces paysages du dedans, pris dans la pierre transparente ; la pensée, pour une fois, a une épaisseur physique que le regard peut suivre. Se pencher sur ces blocs, c'est lire le paysage intérieur d'un autre comme on lit un ciel. On y devine un calme, une agitation, une dérive, une tempête. L'artiste y voit une boussole : ce sont, dit-elle, ces états du dedans qui nous orientent quand nous nous tenons devant l'horizon.</p>
+    <p>Niché dans les corps de métal des veilleurs, on découvre des storm glass. On appelait ainsi, au XIX<sup>e</sup> siècle, ces fioles où de fines aiguilles de cristal se nouent et se dénouent à l'approche du mauvais temps : des baromètres de sorcier, autant divinatoires que savants, où l'on croyait lire la tempête avant même qu'elle se lève. Ce n'est pas seulement la mer tout entière qui se prédit dans une goutte de verre. Ce sont aussi les tourments de nos esprits. Entre ces fioles et les blocs gravés d'ondes circule une même idée : lire, dans un peu de cristal, un temps qu'on ne voit pas encore : celui de l'esprit.</p>
+    <p>Au centre, surplombant le socle de blocs de cristaux, un grand écran fait face à la mer. Mais le veilleur que l'on apercevait de loin en se promenant sur la digue semble avoir disparu derrière lui maintenant que nous nous retrouvons face à l'œuvre. La figure s'est dissoute derrière la lentille. Si le corps s'efface, il réapparaît quelques pas plus loin. Derrière ce bouclier d'invisibilité, les corps disparaissent pour ne laisser place qu'au paysage. Une ligne d'horizon, imperturbable. Un paysage flou que seule la pensée peut envisager pleinement. Le promeneur qui osera faire le tour de l'œuvre devient à son tour une silhouette qui disparaît derrière ce portail lenticulaire, cette porte vers le monde de l'esprit. À l'image du géant de Middelkerke qui, comme le dit la légende, s'en allait chaque matin se baigner seul et se perdre dans la mer. L'écran nous offre, le temps d'un pas de côté, de disparaître dans l'horizon.</p>
+    <p>Derrière cet écran, aux pieds des veilleurs, une table d'orientation, comme une rose des vents, relie tous les éléments. Sa surface est parcourue de ramifications qui hésitent entre le delta d'un fleuve et l'arborescence d'un nerf. Cette carte, qui dessine le mouvement des ondes produites par un cerveau qui rêve, est peut-être la carte de tout ce qui en nous circule et se souvient. Le plan à suivre pour construire nos avenirs.</p>
+    <p>Au cœur de son œuvre, Eva L'Hoest nous questionne : comment se tenir devant un avenir qui ne nous montre rien ? Sa réponse, comme une archéologue du présent : « puisque le futur n'a pas de visage, cherchons-en les signes dans la matière » : une onde durcie en cristal, une tempête pressentie au fond d'une fiole, un corps qui s'efface derrière une vitre. Guetter au bord de l'eau est un geste immémorial et ces instruments-là sont de notre temps. Peut-être n'avons-nous jamais fait autre chose, depuis le premier feu allumé sur une dune, que de donner forme à ce que nous ne savons pas encore en l'imaginant grâce à la créativité de notre esprit.</p>
+    <p class="sig">Leo Marin — texte de présentation de l'œuvre (version site web), juillet 2026.</p>
+  </div></details>
+  <p class="sig" style="margin-top:6px"><b style="font-weight:500;color:var(--ink)">Eva L'Hoest</b>, née en 1991 à Liège, vit et travaille à Bruxelles. Formée à l'Académie royale des beaux-arts de Liège, elle développe une œuvre où la vidéo, la sculpture et l'installation explorent la mémoire et sa matérialisation numérique, en se réappropriant le scanner 3D, l'IRM ou l'image de synthèse. Son travail a été montré au Casino Luxembourg, à la Biennale de Sydney, et figure dans la collection de Lafayette Anticipations.</p>
+</section>
+
+<section id="elements">
+  <p class="eyebrow">Les éléments de l'œuvre</p>
+  <h2>Ce que l'on voit, ce que l'on lit</h2>
+  <div id="els"></div>
+</section>
+
+<section id="ecran">
+  <p class="eyebrow">L'écran · proposition et variantes</p>
+  <h2>Un seul geste, ou trois</h2>
+  <p>La proposition est un <b style="font-weight:500">grand écran unique</b> qui découpe l'horizon d'un seul geste, à la mesure du corps : on y entre, on y disparaît, on en ressort.</p>
+  <p>Le film lenticulaire qui produit l'effet de disparition pourrait n'être disponible qu'en 1,20 m. Pour ne pas dépendre de cette dimension, trois variantes partagent l'écran en panneaux plus petits, sans rien changer au reste de l'œuvre.</p>
+  <div class="vcards" id="vcards"></div>
+</section>
+
+<section id="images">
+  <p class="eyebrow">Premières images</p>
+  <h2>Esquisses, essais, matières</h2>
+  <div class="gal" id="gal"></div>
+</section>
+
+<footer>
+  <b style="font-weight:500;color:var(--ink)">Les Veilleurs — Beaufort 27</b><br>
+  Eva L'Hoest · eva.lhoest@gmail.com · +32 495 57 92 12<br>
+  Texte curatorial : Leo Marin. Images : © Eva L'Hoest 2026. Maquette 3D de travail — proportions et finitions indicatives.<br>
+  Document de présentation · LV-PR-3D-01 · rév. 1 · 09-10-26 · ESQUISSE
+</footer>
+</div>
+</div>
+
+<div id="lb"><img alt=""><p></p></div>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+
+/* ---------- contenu ---------- */
+const ELS=[
+ {k:'figures',n:'01',t:'Les veilleurs',img:'ref_metal_irise.jpg',cap:'Référence de finition : un métal clair aux reflets irisés.',
+  p:"Trois figures d'attente : l'une assise au bord du socle, jambes pendantes ; une autre repliée sur elle-même ; la troisième allongée. Nées d'un fichier numérique puis coulées dans un alliage clair et irisé, elles gardent dans le métal les stries de la machine. Elles ne posent pas : elles regardent le large."},
+ {k:'ecran',n:'02',t:"L'écran",img:'tests_site.jpg',cap:"Essai sur le site : le promeneur disparaît derrière l'écran puis réapparaît, l'horizon reste visible.",
+  p:"Au centre, un écran de verre fait face à la mer. De fines lentilles verticales laissent passer l'horizon mais effacent ce qui se tient juste derrière. Celui qui passe derrière disparaît ; quelques pas plus loin, il réapparaît. Eva a vérifié l'effet sur la dune même : la ligne d'horizon reste imperturbable."},
+ {k:'cristaux',n:'03',t:'Les blocs de cristal',img:'cristaux_detail.jpg',cap:'La rangée de cristaux sous l\'écran, sur la face tournée vers la promenade.',
+  p:"Sous l'écran court une rangée de trente-trois blocs de cristal. À l'intérieur, Eva fait graver au laser des ondes cérébrales enregistrées dans trois états : le sommeil, le geste machinal, la longue méditation devant la mer. On s'y penche comme on lit un ciel : un calme, une agitation, une tempête."},
+ {k:'figures',n:'04',t:'Les storm glass',img:'ref_stormglass.jpg',cap:'Storm glass : des aiguilles de cristal se forment et se dissolvent avec le temps qu\'il fait.',
+  p:"Nichés dans le corps des veilleurs, des storm glass : ces fioles du XIXᵉ siècle où de fines aiguilles de cristal se nouent et se dénouent à l'approche du mauvais temps. Baromètres de marins, un peu sorciers, ils prolongent les cristaux gravés : lire dans un peu de verre un temps qu'on ne voit pas encore."},
+ {k:'rose',n:'05',t:"La table d'orientation",img:'rose_des_vents_bronze.jpg',cap:'La table d\'orientation : les ramifications des ondes d\'un cerveau qui rêve.',
+  p:"Derrière l'écran, au pied des veilleurs, un demi-disque comme une rose des vents. Sa surface est parcourue de ramifications, entre le delta d'un fleuve et l'arborescence d'un nerf : le dessin des ondes d'un cerveau qui rêve, une carte de ce qui en nous circule et se souvient."},
+ {k:'socle',n:'06',t:'Le socle',img:'ref_pierre.jpg',cap:'Une pierre claire, assortie au sable de la dune.',
+  p:"Tout repose sur un seul grand bloc de pierre claire, choisie pour s'accorder au sable de la dune. Sa forme arrondie vers la mer accueille la figure allongée et la table d'orientation ; sa face droite, tournée vers la promenade, porte les cristaux."},
+ {k:'cristaux',n:'07',t:'La lumière',img:null,cap:'',
+  p:"À la tombée du jour, une lumière douce s'allume dans la rangée de cristaux et fait apparaître les ondes gravées. Elle est alimentée par le soleil, capté discrètement en haut du cadre : l'œuvre vit seule, sans câble."}
+];
+const VARS={
+ grande:{t:'Proposition — grand écran',d:"Un écran unique de 1,80 × 1,20 m dans un cadre sombre et fin : l'horizon découpé d'un seul geste.",prop:true},
+ triptyque:{t:'Variante A — triptyque',d:"Trois panneaux hauts côte à côte, légèrement orientés, comme les volets d'un retable face à la mer."},
+ trois_a:{t:'Variante B — trois écrans, écart large',d:"Trois écrans plus petits, posés en éventail sur le socle, chacun encadrant son propre morceau d'horizon."},
+ trois_b:{t:'Variante C — trois écrans, écart serré',d:"La même idée, les écrans rapprochés : l'ensemble se lit à nouveau comme une seule fenêtre."}
+};
+const GAL=[
+ {f:'simulation_site.jpg',c:"Simulation d'implantation sur la digue de Westende.",w:1},
+ {f:'vue_ensemble_3d.jpg',c:"Première maquette 3D d'Eva : les trois figures autour du cadre."},
+ {f:'tests_site.jpg',c:"Essai de disparition derrière l'écran, sur le site.",w:0},
+ {f:'rose_des_vents_bronze.jpg',c:"Table d'orientation, motif des ondes."},
+ {f:'ref_stormglass.jpg',c:'Storm glass.'},
+ {f:'ref_metal_irise.jpg',c:'Métal irisé des figures.'},
+ {f:'ref_pierre.jpg',c:'Pierre claire du socle.'}
+];
+const IMG='presentation/img/';
+
+/* éléments */
+const els=document.getElementById('els');
+ELS.forEach((e,i)=>{const d=document.createElement('div');d.className='el';d.dataset.k=e.k;
+ d.innerHTML=(e.img?`<img src="${IMG+e.img}" alt="${e.t}" loading="lazy" title="${e.cap}">`:`<div class="ph" title="lumière"></div>`)+`<div><h3><span class="n">${e.n}</span>${e.t}</h3><p>${e.p}</p><span class="go">voir dans la maquette →</span></div>`;
+ d.onclick=ev=>{if(ev.target.tagName==='IMG'){openLb(IMG+e.img,e.cap);return}document.querySelectorAll('.el').forEach(x=>x.classList.toggle('on',x===d));focus(e.k);if(innerWidth<=900)scrollTo({top:0,behavior:'smooth'})};
+ els.appendChild(d)});
+/* variantes */
+const vc=document.getElementById('vcards');
+Object.entries(VARS).forEach(([k,v])=>{const d=document.createElement('div');d.className='vc'+(v.prop?' prop':'')+(k==='grande'?' on':'');d.dataset.v=k;
+ d.innerHTML=(v.prop?'<span class="tag">Proposition</span>':'')+`<b>${v.t.replace(/^.*— /,'')}</b><span>${v.d}</span>`;d.onclick=()=>setVariant(k);vc.appendChild(d)});
+document.querySelectorAll('.vbtn').forEach(b=>b.onclick=()=>setVariant(b.dataset.v));
+/* galerie + visionneuse */
+const gal=document.getElementById('gal');
+GAL.forEach(g=>{const f=document.createElement('figure');if(g.w!==undefined)f.className='w';f.innerHTML=`<img src="${IMG+g.f}" alt="" loading="lazy"><figcaption>${g.c}</figcaption>`;f.onclick=()=>openLb(IMG+g.f,g.c);gal.appendChild(f)});
+const lb=document.getElementById('lb');function openLb(src,c){lb.querySelector('img').src=src;lb.querySelector('p').textContent=c||'';lb.style.display='flex'}lb.onclick=()=>lb.style.display='none';
+/* navigation active */
+const panel=document.getElementById('panel'),navA=[...document.querySelectorAll('nav a')];
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting)navA.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+en.target.id))}),{root:innerWidth>900?panel:null,rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('section').forEach(s=>io.observe(s));
+
+/* ---------- scène 3D ---------- */
+const stage=document.getElementById('stage');
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+stage.insertBefore(renderer.domElement,stage.firstChild);
+const scene=new THREE.Scene();
+const pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+scene.fog=new THREE.Fog(0xeef0ee,18,70);
+const cam=new THREE.PerspectiveCamera(32,1,0.05,400);
+const ctl=new OrbitControls(cam,renderer.domElement);ctl.enableDamping=true;ctl.minDistance=1.2;ctl.maxDistance=16;ctl.maxPolarAngle=Math.PI*0.495;
+scene.add(new THREE.HemisphereLight(0xf3f6f8,0xcbb894,0.55));
+const sun=new THREE.DirectionalLight(0xfff4e2,1.6);sun.position.set(-4,7,-5);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+Object.assign(sun.shadow.camera,{left:-4,right:4,top:4,bottom:-4,near:1,far:20});sun.shadow.bias=-0.0004;scene.add(sun);
+/* dune + mer : la mer est du côté +Z (derrière l'écran) */
+const sand=new THREE.Mesh(new THREE.PlaneGeometry(400,400),new THREE.MeshStandardMaterial({color:0xe2d4b6,roughness:1}));sand.rotation.x=-Math.PI/2;sand.position.z=-150;sand.position.y=-0.002;sand.receiveShadow=true;scene.add(sand);
+const deck=new THREE.Mesh(new THREE.PlaneGeometry(9,3.2),new THREE.MeshStandardMaterial({color:0xcfc6b6,roughness:.95}));deck.rotation.x=-Math.PI/2;deck.position.set(0,0.001,-2.4);deck.receiveShadow=true;scene.add(deck);
+const sea=new THREE.Mesh(new THREE.PlaneGeometry(400,200),new THREE.MeshStandardMaterial({color:0x8fa3a8,roughness:.35,metalness:.1}));sea.rotation.x=-Math.PI/2;sea.position.set(0,0.004,110);scene.add(sea);
+
+const M={
+ socle:new THREE.MeshStandardMaterial({color:0xe6dcc6,roughness:.82}),
+ figure:new THREE.MeshPhysicalMaterial({color:0xb4afa4,metalness:.9,roughness:.36,iridescence:.4,iridescenceIOR:1.6,iridescenceThicknessRange:[200,800],envMapIntensity:1.1}),
+ rose:new THREE.MeshStandardMaterial({color:0x8b6a45,metalness:.85,roughness:.42}),
+ cristaux:new THREE.MeshPhysicalMaterial({color:0xf2f7f8,roughness:.12,metalness:0,transmission:.5,thickness:.1,ior:1.5,clearcoat:1,transparent:true,opacity:.9,emissive:0x000000}),
+ cadre:new THREE.MeshStandardMaterial({color:0x2b2c2e,metalness:.6,roughness:.45}),
+ vitre:new THREE.MeshPhysicalMaterial({color:0xdfe9ec,roughness:.18,metalness:0,transmission:.55,transparent:true,opacity:.55,side:THREE.DoubleSide,depthWrite:false})
+};
+const loader=new GLTFLoader();loader.setMeshoptDecoder(MeshoptDecoder);
+const cache={};let cur=null,curKey=null;const loadEl=document.getElementById('load');
+function prep(root){
+ const parts={};
+ root.traverse(o=>{if(!o.isMesh)return;const n=(o.name||o.parent?.name||'').toLowerCase();let k=n.startsWith('figure')?'figures':n;
+  let g=o.geometry;
+  if(['socle','cadre','vitre','cristaux'].includes(k)){g=g.index?g.toNonIndexed():g;}
+  g.computeVertexNormals();o.geometry=g;
+  o.material=M[k==='figures'?'figure':k]||M.socle;o.castShadow=k!=='vitre';o.receiveShadow=true;
+  (parts[k]=parts[k]||[]).push(o)});
+ root.userData.parts=parts;return root;
+}
+function setVariant(k){
+ if(k===curKey)return;curKey=k;
+ document.querySelectorAll('.vbtn').forEach(b=>b.classList.toggle('on',b.dataset.v===k));
+ document.querySelectorAll('.vc').forEach(b=>b.classList.toggle('on',b.dataset.v===k));
+ document.getElementById('vlabel').textContent=VARS[k].t;
+ const show=r=>{if(cur)scene.remove(cur);cur=r;scene.add(r);loadEl.style.opacity=0;};
+ if(cache[k]){show(cache[k]);return}
+ loadEl.style.opacity=1;
+ loader.load(`presentation/3d/lv_${k}.glb`,g=>{cache[k]=prep(g.scene);if(curKey===k)show(cache[k]);},undefined,()=>{loadEl.textContent='Maquette indisponible';});
+}
+/* caméra : vues et focus */
+let anim=null;
+function fly(pos,tgt,ms=1100){const p0=cam.position.clone(),t0=ctl.target.clone(),st=performance.now();anim=t=>{let u=Math.min(1,(t-st)/ms);u=u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;cam.position.lerpVectors(p0,pos,u);ctl.target.lerpVectors(t0,tgt,u);if(u>=1)anim=null}}
+const HOME={p:new THREE.Vector3(3.6,2.3,-5.2),t:new THREE.Vector3(0,0.75,0.6)};
+const FOC={
+ figures:{p:[-4.2,2.0,1.6],t:[0,0.7,0.8]},
+ ecran:{p:[0.5,1.3,-4.2],t:[0,1.05,0.45]},
+ cristaux:{p:[1.3,0.75,-3.7],t:[0,0.25,-0.05]},
+ rose:{p:[0.6,2.7,4.4],t:[0,0.5,1.0]},
+ socle:{p:[4.8,2.2,3.8],t:[0,0.3,0.9]}
+};
+let hl=null;
+function focus(k){const f=FOC[k];if(!f)return;fly(new THREE.Vector3(...f.p),new THREE.Vector3(...f.t));
+ // léger halo sur l'élément choisi
+ Object.values(M).forEach(m=>{if(m.emissive)m.emissive.setHex(0)});
+ const key={figures:'figure',ecran:'cadre'}[k]||k;
+ if(M[key]&&M[key].emissive){M[key].emissive.setHex(0x1d3a44);clearTimeout(hl);hl=setTimeout(()=>M[key].emissive.setHex(0),1800)}
+}
+cam.position.copy(HOME.p);ctl.target.copy(HOME.t);
+/* clic dans la maquette → élément */
+const ray=new THREE.Raycaster(),mv=new THREE.Vector2();let down=null;
+renderer.domElement.addEventListener('pointerdown',e=>down=[e.clientX,e.clientY]);
+renderer.domElement.addEventListener('pointerup',e=>{if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5||!cur)return;
+ const r=renderer.domElement.getBoundingClientRect();mv.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(mv,cam);
+ const hit=ray.intersectObject(cur,true)[0];if(!hit)return;let n=(hit.object.name||'').toLowerCase();
+ const k=n.startsWith('figure')?'figures':(n==='cadre'||n==='vitre')?'ecran':n;
+ const el=[...document.querySelectorAll('.el')].find(x=>x.dataset.k===k);if(el){document.querySelectorAll('.el').forEach(x=>x.classList.toggle('on',x===el));if(innerWidth>900)el.scrollIntoView({behavior:'smooth',block:'center'});}
+ focus(k)});
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.fov=w<h?44:32;cam.updateProjectionMatrix()}
+addEventListener('resize',resize);resize();
+ctl.addEventListener('start',()=>anim=null);
+renderer.setAnimationLoop(t=>{if(anim)anim(t);ctl.update();renderer.render(scene,cam)});
+setVariant('grande');
+</script>
+</body>
+</html>
