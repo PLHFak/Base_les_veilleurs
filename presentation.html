@@ -91,7 +91,7 @@ footer{padding:26px 34px 40px;font:12px/1.6 var(--sans);color:var(--mute)}
 </head>
 <body>
 <div id="gate"><form onsubmit="return gate(event)"><p>Code d'accès</p><input id="code" type="password" autofocus><button>Entrer</button></form></div>
-<script>function gate(e){e.preventDefault();const i=document.getElementById('code'),v=i.value.trim();if(v.length<3){i.value='';return false}i.disabled=true;
+<script>function gate(e){e.preventDefault();const i=document.getElementById('code'),v=i.value.trim();if(v.toUpperCase()==='EVA'){sessionStorage.setItem('lv','1');document.getElementById('gate').remove();return false}if(v.length<3){i.value='';return false}i.disabled=true;
 fetch('/api/gate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:v})}).then(r=>r.ok?r.json():null).then(j=>{if(j&&(j.role==='admin'||j.role==='team')){sessionStorage.setItem('lv',j.role==='admin'?'2':'3');if(j.role==='admin')sessionStorage.setItem('lv_code',v);document.getElementById('gate').remove()}else{i.disabled=false;i.value='';i.focus()}}).catch(()=>{i.disabled=false;i.value=''});return false}
 const qs=new URLSearchParams(location.search);const qc=qs.get('code');const qa=(qs.get('a')||'').replace(/[^A-Za-z0-9_-]/g,'').slice(0,24);if(qa)sessionStorage.setItem('lv_ref',qa);if(qc&&qc.toUpperCase()==='EVA'){sessionStorage.setItem('lv','1');history.replaceState(null,'',location.pathname)}
 if(['1','2','3'].includes(sessionStorage.getItem('lv')))document.getElementById('gate').remove();
