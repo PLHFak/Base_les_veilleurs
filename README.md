@@ -4,6 +4,7 @@
 
 - `data.js` — tout le contenu : objet, filières, ateliers, étapes, documents, journal
 - `monobloc.html` — maquette 3D interactive (three.js, modèle `docs/monobloc_v01.glb`)
+- `les-veilleurs-fondation/` — note préliminaire de fondation sur la dune (masses, vent, sol, trois variantes chiffrées), servie à `/les-veilleurs-fondation/` ; voir son README
 - `les-veilleurs-garde-corps/` — site autonome de la variante « écran en vitrage encastré » (projet Vercel séparé, Root Directory = ce dossier) ; voir son README
 - `docs/` — plans J. Miceli (PDF, PNG rendus dans `docs/png/`), modèle GLB, châssis de l'écran (`docs/vitrine/`)
 - `vercel.json` — déploiement Vercel (preset Other), noindex

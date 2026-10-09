@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>La fondation — Les Veilleurs</title>
+<link rel="stylesheet" href="lv.css">
+<style>
+/* Compléments propres à ce dossier (lv.css reste identique à la charte commune) */
+td.num,th.num{text-align:right;white-space:nowrap}
+.alerte{background:var(--card);border-left:3px solid var(--alerte);padding:10px 14px;margin:14px 0}
+.fig{margin:14px 0 4px}.fig img{margin:0;width:100%}
+.variante{padding:18px 0 6px;border-top:1px dashed var(--line)}.variante:first-of-type{border-top:0}
+.variante h3{font-size:18px;font-weight:normal;margin:0 0 6px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.pm{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0}.pm div{background:#fff;border:1px solid var(--line);padding:10px 12px;font-size:14px}
+.pm b{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-bottom:3px;font-weight:normal}
+.rex h3{color:var(--ink);font-weight:normal;font-size:17px;margin:18px 0 2px}.rex .src{font-size:12px;color:var(--mute)}
+ul.src{font-size:13px;padding-left:18px}ul.src li{margin:3px 0}
+ol.verif{padding-left:22px}ol.verif li{margin:8px 0}
+details ul{padding-left:18px;margin:8px 0}details li{margin:6px 0}
+@media (max-width:720px){.pm{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="gate"></div>
+<div id="topbar"></div>
+<header id="hdr"></header>
+<nav id="nav"></nav>
+<main>
+  <section id="synthese"></section>
+  <section id="oeuvre"></section>
+  <section id="site"></section>
+  <section id="vent"></section>
+  <section id="sol"></section>
+  <section id="variantes"></section>
+  <section id="couts"></section>
+  <section id="retours"></section>
+  <section id="verifier"></section>
+  <section id="documents"></section>
+  <section id="journal"></section>
+</main>
+<footer id="foot"></footer>
+<script src="docs/sizes.js"></script>
+<script src="docs/calc/resultats.js"></script>
+<script src="data.js"></script>
+<script src="lv.js"></script>
+<script>
+LV.init(window.DATA, "fondation", ({t, esc, lang}) => {
+  const D = window.DATA, R = window.RES, $ = s => document.querySelector(s);
+  // texte : échappé, puis **gras** et [libellé](lien)
+  const tx = v => esc(t(v)).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  const n = (v, d = 1) => { const s = Number(v).toFixed(d); return lang === "en" ? s : s.replace(".", ","); };
+  const mille = v => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  const h2 = o => `<h2>${tx(o.titre)}${o.sous ? ` <span class="sub">— ${tx(o.sous)}</span>` : ""}</h2>`;
+  const kv = a => `<div class="kv">${a.map(([k, v]) => `<div><b>${tx(k)}</b>${tx(v)}</div>`).join("")}</div>`;
+  const det = (titre, items) => `<details><summary>${tx(titre)}</summary><ul>${items.map(i => `<li>${tx(i)}</li>`).join("")}</ul></details>`;
+  const fig = (src, leg) => `<div class="fig"><a href="${esc(src)}" target="_blank" rel="noopener"><img src="${esc(src)}" alt="${esc(t(leg))}" loading="lazy"></a></div><div class="leg">${tx(leg)}</div>`;
+  const table = (cols, rows, num = []) => `<div class="scroll"><table><tr>${cols.map((c, i) => `<th class="${num.includes(i) ? "num" : ""}">${tx(c)}</th>`).join("")}</tr>${rows.map(r => `<tr class="${r.total ? "total" : ""}">${(r.c || r).map((c, i) => `<td class="${num.includes(i) ? "num" : i === 0 ? "" : ""}">${typeof c === "string" ? esc(c) : tx(c)}</td>`).join("")}</tr>`).join("")}</table></div>`;
+
+  // 1. En bref
+  const S = D.synthese;
+  $("#synthese").innerHTML = `${h2(S)}<p class="lead">${tx(S.lead)}</p>${kv(S.kv)}<h3>${tx(S.points_t)}</h3><ul class="pts">${S.points.map(p => `<li>${tx(p)}</li>`).join("")}</ul><p class="unique">${tx(S.statut)}</p>`;
+
+  // 2. Poids
+  const O = D.oeuvre;
+  const lig = O.lignes.map(l => [l.k, l.s, mille(R.masses_kg[l.m]) + " kg"]);
+  lig.push({total: true, c: [O.total, "", `${mille(R.masse_totale_kg)} kg · ${n(R.W_kN)} kN`]});
+  lig.push([O.mini, "", `${mille(R.masse_min_kg)} kg · ${n(R.Wmin_kN)} kN`]);
+  $("#oeuvre").innerHTML = `${h2(O)}<p class="lead">${tx(O.lead)}</p>${table(O.cols, lig, [2])}${kv(O.kv)}${det(O.comprendre_t, O.comprendre)}`;
+
+  // 3. Site et sol
+  const T = D.site;
+  $("#site").innerHTML = `${h2(T)}<p class="lead">${tx(T.lead)}</p>${kv(T.kv)}<h3>${tx(T.dune_t)}</h3><p>${tx(T.dune)}</p><h3>${tx(T.niveaux_t)}</h3>${table(T.niveaux_cols, T.niveaux, [1])}<p class="alerte">${tx(T.alerte)}</p>${det(T.comprendre_t, T.comprendre)}`;
+
+  // 4. Vent
+  const V = D.vent;
+  const vr = ["plat", "crete", "env"].map(k => { const v = R.vent[k]; return {total: k === "env", c: [V.noms[k], `${n(v.qp_Pa / 1000, 2)} kPa`, `${v.rafale_kmh} km/h`, `${n(v.F_kN)} kN`, n(v.ratio_basculement), `${n(v.gliss_DA1_1)} · ${n(v.gliss_DA1_2)}`, `${n(v.sigma_min_kPa)} – ${n(v.sigma_max_kPa)} kPa`]}; });
+  $("#vent").innerHTML = `${h2(V)}<p class="lead">${tx(V.lead)}</p>${table(V.cols, vr, [1, 2, 3, 4, 5, 6])}<p class="note"><b>${tx(V.lecture_t)}</b> ${tx(V.lecture)}</p><p>${tx(V.glissement)}</p>${fig(V.schema.src, V.schema.leg)}${det(V.comprendre_t, V.comprendre)}`;
+
+  // 5. Portance et tassement
+  const P = D.sol, VI = D.variantes.items;
+  const st = VI.map(it => { const v = R.variantes[it.id], a = v.sols.lache, d = v.sols.dense;
+    return [it.court, `${n(v.q_net_kPa)} kPa`, `${n(d.tassement_15ans_mm)} – ${n(a.tassement_15ans_mm)} mm`, `${n(a.pente_pct, 2)} %`]; });
+  const sp = VI.map(it => { const a = R.variantes[it.id].sols.lache;
+    return [it.court, n(a.portance_poids_seul), n(a.portance_projet), n(a.portance_extreme), n(Math.min(a.glissement_DA1_1, a.glissement_DA1_2))]; });
+  $("#sol").innerHTML = `${h2(P)}<p class="lead">${tx(P.lead)}</p>${table(P.cols_t, st, [1, 2, 3])}<h3>${tx(P.portance_t)}</h3>${table(P.cols_p, sp, [1, 2, 3, 4])}<p class="note"><b>${tx(P.lecture_t)}</b> ${tx(P.lecture)}</p><p>${tx(P.sondage)}</p><h3>${tx(P.risque_t)}</h3><p>${tx(P.risque)}</p>${det(P.comprendre_t, P.comprendre)}`;
+
+  // 6. Trois fondations
+  const F = D.variantes;
+  $("#variantes").innerHTML = `${h2(F)}<p class="lead">${tx(F.lead)}</p>` + VI.map(it => `<div class="variante"><h3>${tx(it.titre)} <span class="badge ${it.id === "A" ? "reco" : ""}">${tx(it.reco)}</span></h3><p>${tx(it.texte)}</p>
+    ${fig(it.schema, {fr: `${t(it.court)} — ${t(F.legende)} ${it.schema.match(/LV-FO-SCH-\d+/)[0]}`})}${kv(it.kv.concat([[D.couts.total, `≈ ${mille(R.couts[it.id].total)} € HTVA`]]))}
+    <div class="pm"><div><b>${tx(F.plus_t)}</b>${tx(it.plus)}</div><div><b>${tx(F.moins_t)}</b>${tx(it.moins)}</div></div></div>`).join("") + det(F.ecartees_t, F.ecartees);
+
+  // 7. Comparaison et coût
+  const C = D.couts;
+  const cr = C.lignes.concat([{total: true, c: [C.total].concat(["A", "B", "C"].map(k => `≈ ${mille(R.couts[k].total)} €`))}]);
+  const detail = ["A", "B", "C"].map((k, i) => { const c = R.couts[k];
+    return `<h3>${tx(VI[i].titre)}</h3>` + table(C.detail_cols, c.lignes.map(([p, m]) => [p, `${mille(m)} €`]).concat([[C.soustotal, `${mille(c.sous_total)} €`], [C.aleas, `${mille(c.aleas)} €`], {total: true, c: [C.arrondi, `${mille(c.total)} €`]}]), [1]); }).join("");
+  $("#couts").innerHTML = `${h2(C)}<p class="lead">${tx(C.lead)}</p>${table(C.cols, cr)}<details><summary>${tx(C.detail_t)}</summary>${detail}</details><h3>${tx(C.hors_t)}</h3>${table(C.hors_cols, C.hors, [1])}<p class="note">${tx(C.sources)}</p>`;
+
+  // 8. Retours d'expérience
+  const X = D.retours;
+  $("#retours").innerHTML = `${h2(X)}<p class="lead">${tx(X.lead)}</p><div class="rex">` + X.items.map(i => `<h3>${tx(i.t)}</h3><p>${tx(i.p)}</p><div class="src">${i.src.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)} ↗</a>`).join(" · ")}</div>`).join("") +
+    `</div><details><summary>${tx(X.sources_t)}</summary><p class="leg">${tx(X.sources_note)}</p><ul class="src">${X.sources.map(([l, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${tx(l)} ↗</a></li>`).join("")}</ul></details>`;
+
+  // 9. À faire vérifier
+  const Z = D.verifier;
+  $("#verifier").innerHTML = `${h2(Z)}<p class="lead">${tx(Z.lead)}</p><ol class="verif">${Z.items.map(i => `<li>${tx(i)}</li>`).join("")}</ol>`;
+});
+</script>
+</body>
+</html>
